@@ -1,35 +1,13 @@
-/* =========================================================
-   GHN ATTENDANCE SYSTEM
-   MOBILE UI V12
-   ========================================================= */
-
 :root {
     --bg: #031217;
-    --bg-soft: #071b21;
     --card: #061b21;
-    --input: #0d252c;
-
+    --input: #19343b;
     --cyan: #00e5ff;
-    --cyan-light: #12f5f5;
-    --cyan-dark: #00bfc8;
-
+    --cyan2: #00d2d3;
     --text: #ffffff;
-    --text-soft: #c5d4d8;
-    --placeholder: #8baeb5;
-
+    --muted: #91b5ba;
     --border: #00d9e8;
-
-    --radius-card: 26px;
-    --radius-input: 15px;
-
-    --shadow:
-        0 0 25px rgba(0, 229, 255, 0.12);
 }
-
-
-/* =========================================================
-   RESET
-   ========================================================= */
 
 * {
     margin: 0;
@@ -37,14 +15,12 @@
     box-sizing: border-box;
 }
 
-
 html {
     width: 100%;
     min-height: 100%;
-    background: var(--bg);
-    scroll-behavior: smooth;
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
 }
-
 
 body {
     width: 100%;
@@ -52,541 +28,399 @@ body {
 
     background:
         radial-gradient(
-            circle at 50% 0%,
-            rgba(0, 229, 255, 0.10),
-            transparent 35%
-        ),
-        linear-gradient(
-            180deg,
-            #071b21 0%,
-            #031217 55%,
-            #020c10 100%
+            circle at top center,
+            #123d45 0%,
+            #071418 42%,
+            #061115 100%
         );
 
     color: var(--text);
 
     font-family:
         "Segoe UI",
-        Roboto,
         Arial,
         sans-serif;
 
-    font-size: 16px;
-
     overflow-x: hidden;
+
+    -webkit-font-smoothing: antialiased;
 }
 
 
-/* =========================================================
+/* =====================================================
    CONTAINER
-   ========================================================= */
+===================================================== */
 
-.app-container {
-
+.container {
     width: 100%;
-
-    max-width: 1180px;
-
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-
-    padding-left: 18px;
-    padding-right: 18px;
 }
 
 
-/* =========================================================
+/* =====================================================
    HEADER
-   ========================================================= */
-
-header.app-container {
-
-    padding-top: 18px;
-    padding-bottom: 18px;
-}
-
+===================================================== */
 
 .header-banner {
-
     width: 100%;
+    height: 250px;
 
-    min-height: 210px;
+    margin-bottom: 36px;
 
-    border-radius: 24px;
+    border-radius: 28px;
 
-    border: 1px solid var(--cyan);
+    border: 1.5px solid var(--cyan);
+
+    overflow: hidden;
 
     background-image:
         url("https://raw.githubusercontent.com/duynh1998/Banner/main/ChatGPT%20Image%2013_10_56%204%20thg%208%2C%202026.png");
 
     background-repeat: no-repeat;
-
     background-size: cover;
+    background-position: center center;
 
-    background-position: center;
-
-    background-color: #06171c;
+    background-color: #071418;
 
     box-shadow:
-        0 0 20px rgba(0, 229, 255, 0.15),
-        inset 0 0 30px rgba(0, 229, 255, 0.04);
-
-    overflow: hidden;
+        0 0 20px rgba(0, 229, 255, .18);
 }
 
 
-/* =========================================================
-   MAIN
-   ========================================================= */
-
-main.app-container {
-
-    padding-bottom: 30px;
-}
-
+/* =====================================================
+   ROW
+===================================================== */
 
 .row {
+    margin-left: -10px;
+    margin-right: -10px;
+}
 
-    --bs-gutter-x: 24px;
-    --bs-gutter-y: 24px;
+.row > * {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 
-/* =========================================================
+/* =====================================================
    CARD
-   ========================================================= */
+===================================================== */
 
 .glass-card {
-
     width: 100%;
 
     background:
         linear-gradient(
             145deg,
-            rgba(7, 30, 37, 0.98),
-            rgba(3, 20, 25, 0.98)
+            rgba(11, 32, 39, .98),
+            rgba(7, 25, 31, .98)
         );
 
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
 
-    border-radius: var(--radius-card);
+    border-radius: 26px;
 
-    padding: 32px;
+    padding: 30px;
 
     box-shadow:
-        0 0 22px rgba(0, 229, 255, 0.10);
+        0 0 20px rgba(0, 210, 211, .12);
 
-    position: relative;
-
-    overflow: hidden;
+    margin-bottom: 24px;
 }
 
 
-/* ánh sáng nhẹ bên trong card */
-
-.glass-card::before {
-
-    content: "";
-
-    position: absolute;
-
-    top: -120px;
-    right: -120px;
-
-    width: 260px;
-    height: 260px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(0, 229, 255, 0.08),
-            transparent 70%
-        );
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   SECTION TITLE
-   ========================================================= */
+/* =====================================================
+   TITLE
+===================================================== */
 
 .section-title {
-
     display: flex;
-
     align-items: center;
 
-    gap: 13px;
+    gap: 12px;
 
     color: var(--cyan);
 
     font-size: 28px;
-
-    font-weight: 800;
-
-    letter-spacing: 0.3px;
-
     line-height: 1.2;
 
-    margin-bottom: 20px;
+    font-weight: 800;
 }
-
 
 .section-title i {
-
-    font-size: 34px;
-
-    line-height: 1;
-
-    color: var(--cyan);
+    font-size: 32px;
 }
 
 
-/* =========================================================
+/* =====================================================
    DIVIDER
-   ========================================================= */
+===================================================== */
 
 .section-divider {
-
     width: 100%;
+    height: 1px;
 
-    height: 2px;
+    background: var(--border);
 
-    margin-bottom: 28px;
+    opacity: .55;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(0, 229, 255, 0.65),
-            rgba(0, 229, 255, 0.20)
-        );
-
-    box-shadow:
-        0 0 5px rgba(0, 229, 255, 0.15);
+    margin-top: 24px;
+    margin-bottom: 30px;
 }
 
 
-/* =========================================================
+/* =====================================================
    FORM GROUP
-   ========================================================= */
+===================================================== */
 
 .form-group {
-
     margin-bottom: 22px;
 }
 
 
-.form-group:last-of-type {
-
-    margin-bottom: 0;
-}
-
-
-/* =========================================================
+/* =====================================================
    LABEL
-   ========================================================= */
+===================================================== */
 
 .form-group label {
-
     display: block;
 
     color: #ffffff;
 
     font-size: 18px;
 
-    font-weight: 600;
-
     line-height: 1.3;
 
-    margin-bottom: 9px;
+    font-weight: 700;
+
+    margin-bottom: 10px;
 }
 
 
-/* =========================================================
+/* =====================================================
    INPUT + SELECT
-   ========================================================= */
+===================================================== */
 
 .form-control,
 .form-select {
 
+    display: block;
+
     width: 100%;
 
-    min-height: 56px;
+    height: 58px;
+    min-height: 58px;
 
-    padding: 13px 17px;
+    padding: 0 18px;
 
-    background-color: var(--input);
+    background: var(--input);
 
     color: #ffffff;
 
-    border: 1px solid rgba(126, 179, 188, 0.50);
+    border: 1.5px solid var(--cyan2);
 
-    border-radius: var(--radius-input);
+    border-radius: 16px;
 
     font-size: 18px;
 
-    font-weight: 400;
+    font-weight: 500;
 
     outline: none;
 
     box-shadow: none;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background-color 0.2s ease;
 }
 
-
-/* SELECT */
-
-.form-select {
-
-    cursor: pointer;
-
-    appearance: auto;
-}
-
-
-/* placeholder */
 
 .form-control::placeholder {
-
-    color: var(--placeholder);
-
+    color: #8eb2b7;
     opacity: 1;
 }
 
 
-/* focus */
-
 .form-control:focus,
 .form-select:focus {
 
-    background-color: #102d35;
+    background: #1b3941;
 
     color: #ffffff;
 
     border-color: var(--cyan);
 
     box-shadow:
-        0 0 0 2px rgba(0, 229, 255, 0.10),
-        0 0 15px rgba(0, 229, 255, 0.12);
+        0 0 0 2px rgba(0, 229, 255, .08),
+        0 0 15px rgba(0, 229, 255, .18);
 
     outline: none;
 }
 
 
-/* select option */
-
 .form-select option {
-
-    background: #092128;
-
+    background: #0b2027;
     color: #ffffff;
 }
 
 
-/* =========================================================
+/* =====================================================
    CHECK IN BUTTON
-   ========================================================= */
+===================================================== */
 
 .btn-ghn {
 
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
     width: 100%;
 
+    height: 70px;
     min-height: 70px;
 
-    margin-top: 26px;
+    margin-top: 30px;
 
     padding: 14px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00cdd0,
+            #00dfe1
+        );
+
+    color: #001316;
 
     border: none;
 
     border-radius: 16px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #08d6dc,
-            #0ad8e8
-        );
-
-    color: #001014;
-
     font-size: 22px;
 
     font-weight: 800;
 
-    letter-spacing: 0.2px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 12px;
-
     box-shadow:
-        0 8px 22px rgba(0, 229, 255, 0.18);
+        0 8px 24px rgba(0, 210, 211, .20);
 
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease,
-        filter 0.15s ease;
+    transition: .2s ease;
 }
 
 
 .btn-ghn i {
-
     font-size: 28px;
-
-    line-height: 1;
 }
 
 
 .btn-ghn:hover {
 
-    color: #001014;
+    background:
+        linear-gradient(
+            135deg,
+            #00e5e7,
+            #0af4f5
+        );
+
+    color: #001316;
+
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   CHECK OUT BUTTON
+===================================================== */
+
+.btn-checkout {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    height: 70px;
+    min-height: 70px;
+
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    padding: 14px 20px;
 
     background:
         linear-gradient(
             135deg,
-            #10e4e8,
-            #15e9f5
+            #00cdd0,
+            #00dfe1
         );
 
-    transform: translateY(-1px);
-
-    box-shadow:
-        0 10px 28px rgba(0, 229, 255, 0.25);
-}
-
-
-.btn-ghn:active {
-
-    transform: scale(0.985);
-
-    box-shadow:
-        0 4px 12px rgba(0, 229, 255, 0.15);
-}
-
-
-/* =========================================================
-   CHECK OUT BUTTON
-   Giống CHECK IN
-   ========================================================= */
-
-.btn-checkout {
-
-    width: 100%;
-
-    min-height: 70px;
-
-    margin-top: 26px;
-
-    margin-bottom: 28px;
-
-    padding: 14px 20px;
+    color: #001316;
 
     border: none;
 
     border-radius: 16px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #08d6dc,
-            #0ad8e8
-        );
-
-    color: #001014;
-
     font-size: 22px;
 
     font-weight: 800;
 
-    letter-spacing: 0.2px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 12px;
-
     box-shadow:
-        0 8px 22px rgba(0, 229, 255, 0.18);
+        0 8px 24px rgba(0, 210, 211, .20);
 
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
+    transition: .2s ease;
 }
 
 
 .btn-checkout i {
-
     font-size: 28px;
 }
 
 
 .btn-checkout:hover {
 
-    color: #001014;
-
     background:
         linear-gradient(
             135deg,
-            #10e4e8,
-            #15e9f5
+            #00e5e7,
+            #0af4f5
         );
 
+    color: #001316;
+
     transform: translateY(-1px);
-
-    box-shadow:
-        0 10px 28px rgba(0, 229, 255, 0.25);
 }
 
 
-.btn-checkout:active {
-
-    transform: scale(0.985);
-}
-
-
-/* =========================================================
+/* =====================================================
    CHECKOUT INFO
-   ========================================================= */
+===================================================== */
 
 .checkout-info {
 
     width: 100%;
 
-    min-height: 220px;
+    min-height: 210px;
 
-    margin-top: 4px;
+    margin-top: 0;
 
-    padding: 26px;
+    padding: 24px 18px;
 
     border: 1px dashed var(--cyan);
 
     border-radius: 18px;
 
     background:
-        rgba(3, 22, 28, 0.65);
+        rgba(3, 22, 28, .65);
 }
 
 
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
-
 .empty-state {
 
-    min-height: 165px;
+    min-height: 160px;
 
     display: flex;
 
@@ -600,19 +434,13 @@ main.app-container {
 }
 
 
-.empty-state > i {
+.empty-state i {
 
-    font-size: 54px;
+    font-size: 50px;
 
     color: var(--cyan);
 
     margin-bottom: 15px;
-
-    filter:
-        drop-shadow(
-            0 0 8px
-            rgba(0, 229, 255, 0.25)
-        );
 }
 
 
@@ -632,7 +460,7 @@ main.app-container {
 
     margin: 0;
 
-    color: var(--text-soft);
+    color: #c8d9dc;
 
     font-size: 16px;
 
@@ -640,149 +468,123 @@ main.app-container {
 }
 
 
-.empty-state p b {
-
+.empty-state b {
     color: var(--cyan);
 }
 
 
-/* =========================================================
-   CHECKOUT INFO DATA
-   ========================================================= */
+/* =====================================================
+   CHECKOUT DATA
+===================================================== */
 
 .checkout-info .mb-3,
 .checkout-info .mb-4 {
 
-    margin-bottom: 20px !important;
+    padding: 14px 16px;
 
-    color: #ffffff;
+    margin-bottom: 12px !important;
 
-    font-size: 17px;
+    background:
+        rgba(25, 52, 59, .65);
 
-    line-height: 1.6;
+    border-radius: 12px;
 }
 
 
 .checkout-info b {
-
     color: var(--cyan);
-
-    font-weight: 700;
 }
 
 
-/* =========================================================
+/* =====================================================
    FOOTER
-   ========================================================= */
-
-footer.app-container {
-
-    padding-bottom: 20px;
-}
-
+===================================================== */
 
 .footer {
 
-    padding:
-
-        18px
-
-        0;
+    padding: 18px 0 25px;
 
     text-align: center;
 
     color: #91a7ac;
 
     font-size: 15px;
-
-    border-top:
-        1px solid rgba(0, 229, 255, 0.12);
 }
 
 
-/* =========================================================
-   DISABLED
-   ========================================================= */
-
-button:disabled {
-
-    opacity: 0.55;
-
-    cursor: not-allowed;
-
-    transform: none !important;
-
-    box-shadow: none !important;
-}
-
-
-/* =========================================================
+/* =====================================================
    MOBILE
-   ========================================================= */
+===================================================== */
 
 @media (max-width: 767.98px) {
 
+    html,
     body {
 
-        font-size: 16px;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+
+        overflow-x: hidden;
     }
 
 
-    .app-container {
+    .container {
+
+        width: 100%;
+        max-width: 100%;
 
         padding-left: 18px;
-
         padding-right: 18px;
-    }
-
-
-    header.app-container {
-
-        padding-top: 12px;
-
-        padding-bottom: 18px;
-    }
-
-
-    .header-banner {
-
-        min-height: 145px;
-
-        border-radius: 20px;
-
-        background-position: center;
-    }
-
-
-    main.app-container {
-
-        padding-bottom: 18px;
     }
 
 
     .row {
 
-        --bs-gutter-x: 0;
-
-        --bs-gutter-y: 20px;
+        margin-left: 0;
+        margin-right: 0;
     }
 
 
+    .row > * {
+
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+
+    /* HEADER */
+
+    .header-banner {
+
+        height: 145px;
+
+        margin-bottom: 24px;
+
+        border-radius: 20px;
+    }
+
+
+    /* CARD */
+
     .glass-card {
 
-        padding: 24px 20px 28px;
+        padding:
+            24px
+            20px
+            30px;
+
+        margin-bottom: 20px;
 
         border-radius: 24px;
     }
 
 
+    /* TITLE */
+
     .section-title {
 
-        font-size: 25px;
-
-        gap: 10px;
-
-        margin-bottom: 18px;
+        font-size: 26px;
     }
 
 
@@ -792,15 +594,21 @@ button:disabled {
     }
 
 
+    /* DIVIDER */
+
     .section-divider {
 
-        margin-bottom: 27px;
+        margin-top: 22px;
+
+        margin-bottom: 28px;
     }
 
 
+    /* FORM */
+
     .form-group {
 
-        margin-bottom: 20px;
+        margin-bottom: 22px;
     }
 
 
@@ -808,39 +616,35 @@ button:disabled {
 
         font-size: 18px;
 
-        margin-bottom: 8px;
+        margin-bottom: 9px;
     }
 
 
     .form-control,
     .form-select {
 
-        min-height: 56px;
+        height: 58px;
 
-        font-size: 17px;
+        min-height: 58px;
 
-        padding-left: 15px;
+        font-size: 18px;
 
-        padding-right: 15px;
+        border-radius: 15px;
     }
 
 
-    /* QUAN TRỌNG:
-       tạo khoảng cách rõ giữa input SĐT và nút */
-
-    .form-group:last-of-type {
-
-        margin-bottom: 0;
-    }
-
+    /* =========================================
+       QUAN TRỌNG:
+       SỐ ĐIỆN THOẠI → CHECK IN
+    ========================================= */
 
     .btn-ghn {
 
-        min-height: 68px;
+        height: 70px;
+
+        min-height: 70px;
 
         margin-top: 30px;
-
-        margin-bottom: 0;
 
         border-radius: 16px;
 
@@ -848,9 +652,15 @@ button:disabled {
     }
 
 
+    /* =========================================
+       CHECK OUT BUTTON
+    ========================================= */
+
     .btn-checkout {
 
-        min-height: 68px;
+        height: 70px;
+
+        min-height: 70px;
 
         margin-top: 28px;
 
@@ -866,13 +676,13 @@ button:disabled {
 
         min-height: 210px;
 
-        padding: 22px 18px;
-
-        border-radius: 17px;
+        padding:
+            22px
+            18px;
     }
 
 
-    .empty-state > i {
+    .empty-state i {
 
         font-size: 48px;
     }
@@ -894,107 +704,71 @@ button:disabled {
 
         font-size: 14px;
 
-        padding-top: 15px;
+        padding-bottom: 20px;
     }
 }
 
 
-/* =========================================================
+/* =====================================================
    SMALL PHONE
-   ========================================================= */
+===================================================== */
 
-@media (max-width: 380px) {
+@media (max-width: 390px) {
 
-    .app-container {
+    .container {
 
-        padding-left: 13px;
-
-        padding-right: 13px;
+        padding-left: 14px;
+        padding-right: 14px;
     }
 
 
     .glass-card {
 
         padding:
-
-            21px
-
+            22px
             16px
+            28px;
 
-            25px;
+        border-radius: 21px;
     }
 
 
     .header-banner {
 
-        min-height: 125px;
-
-        border-radius: 18px;
+        height: 130px;
     }
 
 
     .section-title {
 
-        font-size: 23px;
+        font-size: 24px;
     }
 
 
     .section-title i {
 
-        font-size: 28px;
+        font-size: 29px;
     }
 
 
     .form-control,
     .form-select {
 
-        min-height: 53px;
+        height: 56px;
 
-        font-size: 16px;
+        min-height: 56px;
+
+        font-size: 17px;
     }
 
 
     .btn-ghn,
     .btn-checkout {
 
-        min-height: 64px;
+        height: 66px;
 
-        font-size: 19px;
-    }
-}
+        min-height: 66px;
 
-
-/* =========================================================
-   DESKTOP
-   ========================================================= */
-
-@media (min-width: 992px) {
-
-    .app-container {
-
-        padding-left: 24px;
-
-        padding-right: 24px;
-    }
-
-
-    .header-banner {
-
-        min-height: 230px;
-    }
-
-
-    .glass-card {
-
-        min-height: 100%;
-
-        padding: 32px;
-    }
-
-
-    .form-control,
-    .form-select {
-
-        min-height: 56px;
+        font-size: 20px;
     }
 }
