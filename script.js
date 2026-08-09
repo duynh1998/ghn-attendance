@@ -1,7 +1,7 @@
 /* =========================================================
    GHN ATTENDANCE SYSTEM
    FRONTEND - GITHUB PAGES
-   FAST SETTING VERSION
+   V10 - FAST + STABLE VERSION
    ========================================================= */
 
 
@@ -62,9 +62,7 @@ function showMessage(
         $("popupMessage");
 
     if (old) {
-
         old.remove();
-
     }
 
 
@@ -162,9 +160,6 @@ function showMessage(
 
 /* =========================================================
    API GET - JSONP
-   =========================================================
-   
-   Dùng JSONP cho GitHub Pages → Apps Script
    ========================================================= */
 
 function apiGet(
@@ -234,6 +229,7 @@ function apiGet(
                 clearTimeout(
                     timeout
                 );
+
 
                 try {
 
@@ -321,8 +317,10 @@ function apiGet(
    =========================================================
    
    Lưu ý:
-   Browser gửi POST cross-origin tới Apps Script.
-   Apps Script xử lý doPost().
+   Browser có thể bị CORS khi POST trực tiếp
+   tới Google Apps Script.
+   
+   Nếu POST bị lỗi, KHÔNG được tự động báo success.
    ========================================================= */
 
 async function apiPost(
@@ -341,52 +339,68 @@ async function apiPost(
         });
 
 
-    const response =
-        await fetch(
-            API_URL,
-            {
-
-                method:
-                    "POST",
-
-                body:
-                    body
-
-            }
-        );
-
-
-    /*
-     * Apps Script có thể redirect.
-     */
-
-    const text =
-        await response.text();
-
-
-    /*
-     * Nếu trả JSON bình thường
-     */
-
     try {
 
-        return JSON.parse(
-            text
-        );
+        const response =
+            await fetch(
+                API_URL,
+                {
 
-    } catch (err) {
+                    method:
+                        "POST",
+
+                    body:
+                        body
+
+                }
+            );
+
+
+        const text =
+            await response.text();
+
 
         /*
-         * Với một số môi trường,
-         * POST Apps Script có thể không
-         * trả JSON đọc được từ browser.
+         * Nếu server trả JSON
          */
 
-        return {
+        try {
 
-            success: true
+            const result =
+                JSON.parse(
+                    text
+                );
 
-        };
+
+            return result;
+
+        } catch (jsonError) {
+
+            console.error(
+                "API POST không trả JSON:",
+                text
+            );
+
+
+            throw new Error(
+                "Máy chủ không trả dữ liệu hợp lệ."
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "apiPost error:",
+            error
+        );
+
+
+        throw new Error(
+            error.message ||
+            "Không thể kết nối máy chủ."
+        );
 
     }
 
@@ -409,7 +423,7 @@ async function loadSettingData() {
 
 
         /*
-         * Hiển thị loading
+         * Loading Mô hình
          */
 
         if ($("moHinh")) {
@@ -425,6 +439,10 @@ async function loadSettingData() {
         }
 
 
+        /*
+         * Loading Kho
+         */
+
         if ($("kho")) {
 
             $("kho").innerHTML = `
@@ -437,6 +455,10 @@ async function loadSettingData() {
 
         }
 
+
+        /*
+         * Loading Ca
+         */
 
         if ($("ca")) {
 
@@ -452,7 +474,7 @@ async function loadSettingData() {
 
 
         /*
-         * Gọi API duy nhất
+         * GỌI API DUY NHẤT
          */
 
         const result =
@@ -475,7 +497,7 @@ async function loadSettingData() {
 
 
         /*
-         * Lưu toàn bộ dữ liệu
+         * Lưu toàn bộ SETTING
          * vào trình duyệt
          */
 
@@ -485,6 +507,17 @@ async function loadSettingData() {
             )
                 ? result.data
                 : [];
+
+
+        if (
+            SETTING_DATA.length === 0
+        ) {
+
+            throw new Error(
+                "Sheet SETTING không có dữ liệu."
+            );
+
+        }
 
 
         SETTING_LOADED =
@@ -652,7 +685,7 @@ function loadKhoByMoHinh(
 
 
     /*
-     * Lọc dữ liệu local
+     * Lọc local
      */
 
     const khoList = [
@@ -805,7 +838,7 @@ function loadCa(
 
 
     /*
-     * Lọc Ca local
+     * Lọc local
      */
 
     const caList = [
@@ -919,6 +952,16 @@ function loadCa(
 
 /* =========================================================
    CHECK IN
+   =========================================================
+   
+   CHỈ GỌI CHECK IN 1 LẦN
+   
+   Backend checkIn() đã tự kiểm tra:
+   - nhân viên đã Check In hôm nay chưa
+   - dữ liệu hợp lệ
+   - ghi Sheet
+   
+   Không gọi getCheckInInfo() trước nữa.
    ========================================================= */
 
 async function checkIn() {
@@ -959,46 +1002,62 @@ async function checkIn() {
 
 
     /*
-     * Validate
+     * Validate Mô hình
      */
 
     if (!data.moHinh) {
 
         showMessage(
-            "Vui lòng chọn mô hình."
+            "Vui lòng chọn mô hình.",
+            "THÔNG BÁO"
         );
 
         return;
 
     }
 
+
+    /*
+     * Validate Kho
+     */
 
     if (!data.kho) {
 
         showMessage(
-            "Vui lòng chọn bưu cục."
+            "Vui lòng chọn bưu cục.",
+            "THÔNG BÁO"
         );
 
         return;
 
     }
 
+
+    /*
+     * Validate Ca
+     */
 
     if (!data.ca) {
 
         showMessage(
-            "Vui lòng chọn ca."
+            "Vui lòng chọn ca.",
+            "THÔNG BÁO"
         );
 
         return;
 
     }
 
+
+    /*
+     * Validate Họ tên
+     */
 
     if (!data.hoten) {
 
         showMessage(
-            "Vui lòng nhập họ tên."
+            "Vui lòng nhập họ tên.",
+            "THÔNG BÁO"
         );
 
         return;
@@ -1006,10 +1065,15 @@ async function checkIn() {
     }
 
 
+    /*
+     * Validate Mã NV
+     */
+
     if (!data.manv) {
 
         showMessage(
-            "Vui lòng nhập mã nhân viên."
+            "Vui lòng nhập mã nhân viên.",
+            "THÔNG BÁO"
         );
 
         return;
@@ -1023,7 +1087,10 @@ async function checkIn() {
 
     const button =
         $("checkInButton") ||
-        $("checkInBtn");
+        $("checkInBtn") ||
+        document.querySelector(
+            '[onclick="checkIn()"]'
+        );
 
 
     const oldText =
@@ -1053,36 +1120,7 @@ async function checkIn() {
     try {
 
         /*
-         * Kiểm tra nhân viên
-         */
-
-        const check =
-            await apiGet(
-                "getCheckInInfo",
-                {
-                    manv:
-                        data.manv
-                }
-            );
-
-
-        if (
-            check &&
-            check.success
-        ) {
-
-            showMessage(
-                "Bạn đã chấm công hôm nay. Mỗi nhân viên chỉ được CHECK IN 1 lần/ngày.",
-                "THÔNG BÁO"
-            );
-
-            return;
-
-        }
-
-
-        /*
-         * Gửi Check In
+         * CHỈ 1 REQUEST
          */
 
         const result =
@@ -1093,16 +1131,16 @@ async function checkIn() {
 
 
         /*
-         * Nếu backend trả kết quả
+         * Backend trả false
          */
 
         if (
-            result &&
-            result.success === false
+            !result ||
+            result.success !== true
         ) {
 
             showMessage(
-                result.message ||
+                result?.message ||
                 "CHECK IN không thành công.",
                 "THÔNG BÁO"
             );
@@ -1113,10 +1151,11 @@ async function checkIn() {
 
 
         /*
-         * Thành công
+         * Thành công thật
          */
 
         showMessage(
+            result.message ||
             "CHECK IN thành công.",
             "THÀNH CÔNG"
         );
@@ -1150,9 +1189,13 @@ async function checkIn() {
         );
 
 
+        /*
+         * Không báo thành công giả
+         */
+
         showMessage(
             error.message ||
-            "Không thể CHECK IN.",
+            "Không thể kết nối máy chủ. Vui lòng kiểm tra lại.",
             "LỖI"
         );
 
@@ -1193,7 +1236,8 @@ async function kiemTraCheckOut() {
     if (!manv) {
 
         showMessage(
-            "Vui lòng nhập mã nhân viên."
+            "Vui lòng nhập mã nhân viên.",
+            "THÔNG BÁO"
         );
 
         return;
@@ -1462,7 +1506,7 @@ async function checkOut() {
 
 
         /*
-         * Thông báo thành công
+         * Thành công
          */
 
         showMessage(
@@ -1641,7 +1685,21 @@ document.addEventListener(
             $("checkInBtn");
 
 
-        if (checkInButton) {
+        /*
+         * Chỉ add event nếu HTML
+         * không dùng onclick.
+         *
+         * Nếu đã có onclick="checkIn()"
+         * thì không add thêm để tránh
+         * chạy 2 lần.
+         */
+
+        if (
+            checkInButton &&
+            !checkInButton.hasAttribute(
+                "onclick"
+            )
+        ) {
 
             checkInButton
                 .addEventListener(
@@ -1660,7 +1718,12 @@ document.addEventListener(
             $("checkInfoBtn");
 
 
-        if (checkInfoButton) {
+        if (
+            checkInfoButton &&
+            !checkInfoButton.hasAttribute(
+                "onclick"
+            )
+        ) {
 
             checkInfoButton
                 .addEventListener(
