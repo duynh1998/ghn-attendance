@@ -1186,5 +1186,143 @@ select,
 .btn {
 
     touch-action: manipulation;
+/* =========================================================
+   FINAL FIX - FORM SPACING
+   ========================================================= */
 
+/* Khoảng cách giữa từng nhóm nhập liệu */
+.form-group {
+    display: block;
+    width: 100%;
+    margin-bottom: 28px !important;
+}
+
+/* Label */
+.form-group label {
+    display: block;
+    width: 100%;
+
+    margin: 0 0 11px 0 !important;
+
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    line-height: 1.35;
+}
+
+/* Input và Select */
+.form-group .form-control,
+.form-group .form-select {
+    display: block;
+
+    width: 100%;
+
+    height: 58px;
+    min-height: 58px;
+
+    margin: 0 !important;
+
+    padding: 0 17px;
+
+    border-radius: 15px;
+
+    font-size: 16px !important;
+}
+
+/* Khoảng cách riêng giữa các field */
+.form-group + .form-group {
+    margin-top: 0 !important;
+    margin-bottom: 28px !important;
+}
+
+/* Field cuối trước nút */
+.form-group:last-of-type {
+    margin-bottom: 24px !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .form-group {
+        margin-bottom: 27px !important;
+    }
+
+    .form-group label {
+        margin-bottom: 11px !important;
+
+        font-size: 17px;
+
+        line-height: 1.35;
+    }
+
+    .form-group .form-control,
+    .form-group .form-select {
+        height: 58px;
+        min-height: 58px;
+
+        padding-left: 16px;
+        padding-right: 16px;
+
+        font-size: 16px !important;
+
+        border-radius: 15px;
+    }
+
+    .form-group + .form-group {
+        margin-top: 0 !important;
+        margin-bottom: 27px !important;
+    }
+
+    .form-group:last-of-type {
+        margin-bottom: 24px !important;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE - KHOẢNG CÁCH BANNER → CHECK IN
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    header.app-container {
+        padding-top: 14px !important;
+        padding-bottom: 0 !important;
+    }
+
+    .header-banner {
+        margin-bottom: 0 !important;
+    }
+
+    main.app-container {
+        padding-top: 28px !important;
+    }
+
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .glass-card {
+        padding-top: 24px !important;
+        padding-bottom: 26px !important;
+    }
+
+    .section-divider {
+        margin-top: 21px !important;
+        margin-bottom: 29px !important;
+    }
+
+}
 }
