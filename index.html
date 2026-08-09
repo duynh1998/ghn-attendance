@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#071418">
+  <title>GHN Attendance</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+  <div class="container"><div class="header-banner"></div></div>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-lg-6 col-12 mb-4">
+        <div class="glass-card">
+          <h4><i class="bi bi-box-arrow-in-right"></i> CHECK IN</h4>
+          <hr>
+
+          <div class="mb-3">
+            <label for="moHinh">Mô hình</label>
+            <select id="moHinh" class="form-select">
+              <option value="">Đang tải...</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="kho">Bưu cục</label>
+            <select id="kho" class="form-select">
+              <option value="">-- Chọn mô hình trước --</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="ca">Ca làm việc</label>
+            <select id="ca" class="form-select">
+              <option value="">-- Chọn bưu cục trước --</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="hoten">Họ và tên</label>
+            <input id="hoten" type="text" class="form-control" autocomplete="off" placeholder="Nhập họ và tên">
+          </div>
+
+          <div class="mb-3">
+            <label for="manv">Mã nhân viên</label>
+            <input id="manv" type="text" class="form-control" autocomplete="off" placeholder="Nhập mã nhân viên">
+          </div>
+
+          <div class="mb-3">
+            <label for="sdt">Số điện thoại</label>
+            <input id="sdt" type="tel" class="form-control" autocomplete="off" inputmode="tel" placeholder="Nhập số điện thoại">
+          </div>
+
+          <button type="button" id="checkInBtn" class="btn btn-ghn w-100">
+            <i class="bi bi-check-circle"></i> CHECK IN
+          </button>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-12 mb-4">
+        <div class="glass-card">
+          <h4><i class="bi bi-box-arrow-right"></i> CHECK OUT</h4>
+          <hr>
+
+          <div class="mb-3">
+            <label for="checkoutManv">Mã nhân viên</label>
+            <input id="checkoutManv" type="text" class="form-control" autocomplete="off" placeholder="Nhập mã nhân viên">
+          </div>
+
+          <input type="hidden" id="checkoutRow">
+
+          <button type="button" id="checkInfoBtn" class="btn btn-outline-info w-100">
+            <i class="bi bi-search"></i> KIỂM TRA
+          </button>
+
+          <div id="checkoutInfo" class="mt-4">
+            <div class="text-center text-secondary py-5">
+              <i class="bi bi-person-check" style="font-size:60px;color:#00e5ff;"></i>
+              <h5 class="mt-3">THÔNG TIN CHECK IN</h5>
+              <p>Nhập mã nhân viên và nhấn <b>KIỂM TRA</b> để xem thông tin.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="text-center text-secondary py-3"><small>GHN Attendance System</small></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
