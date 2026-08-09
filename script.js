@@ -1,16 +1,20 @@
 /* =========================================================
-   GHN ATTENDANCE - FAST VERSION
+   GHN ATTENDANCE SYSTEM
+   FRONTEND - GITHUB PAGES
+   FAST SETTING VERSION
    ========================================================= */
-
-const API_URL =
-"https://script.google.com/macros/s/AKfycbyDg8wQCgDWRpH4GeQGwUtjZ8UYo7lRuL7C1iq8EokJykEtWCO6sFrnVGYt9meOwWSH/exec";
-
-
-const $ = id => document.getElementById(id);
 
 
 /* =========================================================
-   CACHE SETTING
+   API URL
+   ========================================================= */
+
+const API_URL =
+    "https://script.google.com/macros/s/AKfycbw-FVOTPA6oZDSIyw5i5ZSzdkm-r9U8v7izq7AR6NKUJOZuOvN4gTVSxWHJ1ALrIypS/exec";
+
+
+/* =========================================================
+   GLOBAL DATA
    ========================================================= */
 
 let SETTING_DATA = [];
@@ -19,81 +23,13 @@ let SETTING_LOADED = false;
 
 
 /* =========================================================
-   POPUP
+   HELPER
    ========================================================= */
 
-function showMessage(message, title = "THÔNG BÁO") {
+function $(id) {
 
-    const old = $("popupMessage");
+    return document.getElementById(id);
 
-    if (old) old.remove();
-
-    const popup = document.createElement("div");
-
-    popup.id = "popupMessage";
-
-    popup.innerHTML = `
-        <div style="
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,.55);
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            z-index:999999;
-            padding:15px;
-        ">
-
-            <div style="
-                width:90%;
-                max-width:420px;
-                background:#0b1f26;
-                border:1px solid #00d2d3;
-                border-radius:18px;
-                padding:25px;
-                color:white;
-                text-align:center;
-                box-shadow:0 0 25px rgba(0,210,211,.35);
-            ">
-
-                <h4 style="
-                    color:#00d2d3;
-                    margin-bottom:18px;
-                    font-weight:700;
-                ">
-                    ${escapeHtml(title)}
-                </h4>
-
-                <div style="
-                    white-space:pre-line;
-                    font-size:16px;
-                    line-height:1.6;
-                ">
-                    ${escapeHtml(message)}
-                </div>
-
-                <button
-                    onclick="document.getElementById('popupMessage').remove()"
-                    style="
-                        margin-top:22px;
-                        width:100%;
-                        padding:12px;
-                        border:none;
-                        border-radius:10px;
-                        background:#00d2d3;
-                        color:#000;
-                        font-weight:bold;
-                    "
-                >
-                    ĐÓNG
-                </button>
-
-            </div>
-
-        </div>
-    `;
-
-    document.body.appendChild(popup);
 }
 
 
@@ -114,196 +50,546 @@ function escapeHtml(value) {
 
 
 /* =========================================================
-   API GET - JSONP
+   POPUP MESSAGE
    ========================================================= */
 
-function apiGet(action, params = {}) {
+function showMessage(
+    message,
+    title = "THÔNG BÁO"
+) {
 
-    return new Promise((resolve, reject) => {
+    const old =
+        $("popupMessage");
 
-        const callback =
-            "ghn_cb_" +
-            Date.now() +
-            "_" +
-            Math.floor(Math.random() * 10000);
+    if (old) {
 
-        const query = new URLSearchParams({
-            action,
-            ...params,
-            callback
-        });
+        old.remove();
 
-        const script =
-            document.createElement("script");
+    }
 
-        const timer = setTimeout(() => {
 
-            cleanup();
+    const popup =
+        document.createElement("div");
 
-            reject(
-                new Error(
-                    "Kết nối máy chủ quá thời gian."
-                )
+    popup.id =
+        "popupMessage";
+
+
+    popup.innerHTML = `
+
+        <div style="
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.60);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            z-index:999999;
+            padding:20px;
+        ">
+
+            <div style="
+                width:100%;
+                max-width:420px;
+                background:#0b1f26;
+                border:1px solid #00d2d3;
+                border-radius:18px;
+                padding:25px;
+                color:white;
+                text-align:center;
+                box-shadow:
+                    0 0 25px
+                    rgba(0,210,211,.35);
+            ">
+
+                <h4 style="
+                    color:#00d2d3;
+                    margin-bottom:18px;
+                    font-weight:700;
+                ">
+
+                    ${escapeHtml(title)}
+
+                </h4>
+
+                <div style="
+                    white-space:pre-line;
+                    font-size:16px;
+                    line-height:1.6;
+                ">
+
+                    ${escapeHtml(message)}
+
+                </div>
+
+                <button
+                    type="button"
+                    onclick="
+                        document
+                        .getElementById('popupMessage')
+                        .remove()
+                    "
+                    style="
+                        margin-top:22px;
+                        width:100%;
+                        padding:12px;
+                        border:none;
+                        border-radius:10px;
+                        background:#00d2d3;
+                        color:#000;
+                        font-weight:bold;
+                        cursor:pointer;
+                    "
+                >
+
+                    ĐÓNG
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(
+        popup
+    );
+
+}
+
+
+/* =========================================================
+   API GET - JSONP
+   =========================================================
+   
+   Dùng JSONP cho GitHub Pages → Apps Script
+   ========================================================= */
+
+function apiGet(
+    action,
+    params = {}
+) {
+
+    return new Promise(
+        function(resolve, reject) {
+
+            const callbackName =
+                "ghnCallback_" +
+                Date.now() +
+                "_" +
+                Math.floor(
+                    Math.random() * 100000
+                );
+
+
+            const query =
+                new URLSearchParams({
+
+                    action:
+                        action,
+
+                    ...params,
+
+                    callback:
+                        callbackName
+
+                });
+
+
+            const script =
+                document.createElement(
+                    "script"
+                );
+
+
+            let finished = false;
+
+
+            const timeout =
+                setTimeout(
+                    function() {
+
+                        if (finished)
+                            return;
+
+                        finished = true;
+
+                        cleanup();
+
+                        reject(
+                            new Error(
+                                "Kết nối máy chủ quá thời gian."
+                            )
+                        );
+
+                    },
+                    20000
+                );
+
+
+            function cleanup() {
+
+                clearTimeout(
+                    timeout
+                );
+
+                try {
+
+                    delete window[
+                        callbackName
+                    ];
+
+                } catch (e) {
+
+                    window[
+                        callbackName
+                    ] = undefined;
+
+                }
+
+
+                if (
+                    script &&
+                    script.parentNode
+                ) {
+
+                    script.parentNode
+                        .removeChild(
+                            script
+                        );
+
+                }
+
+            }
+
+
+            window[
+                callbackName
+            ] = function(data) {
+
+                if (finished)
+                    return;
+
+                finished = true;
+
+                cleanup();
+
+                resolve(data);
+
+            };
+
+
+            script.onerror =
+                function() {
+
+                    if (finished)
+                        return;
+
+                    finished = true;
+
+                    cleanup();
+
+                    reject(
+                        new Error(
+                            "Không thể kết nối Google Apps Script."
+                        )
+                    );
+
+                };
+
+
+            script.src =
+                API_URL +
+                "?" +
+                query.toString();
+
+
+            document.body.appendChild(
+                script
             );
-
-        }, 20000);
-
-
-        function cleanup() {
-
-            clearTimeout(timer);
-
-            delete window[callback];
-
-            script.remove();
 
         }
-
-
-        window[callback] = data => {
-
-            cleanup();
-
-            resolve(data);
-
-        };
-
-
-        script.onerror = () => {
-
-            cleanup();
-
-            reject(
-                new Error(
-                    "Không thể kết nối Google Apps Script."
-                )
-            );
-
-        };
-
-
-        script.src =
-            API_URL +
-            "?" +
-            query.toString();
-
-        document.body.appendChild(script);
-
-    });
+    );
 
 }
 
 
 /* =========================================================
    API POST
+   =========================================================
+   
+   Lưu ý:
+   Browser gửi POST cross-origin tới Apps Script.
+   Apps Script xử lý doPost().
    ========================================================= */
 
-function apiPost(action, params = {}) {
+async function apiPost(
+    action,
+    params = {}
+) {
 
-    return new Promise((resolve, reject) => {
+    const body =
+        new URLSearchParams({
 
-        const form =
-            new URLSearchParams({
+            action:
                 action,
-                ...params
-            });
 
-        fetch(API_URL, {
+            ...params
 
-            method: "POST",
+        });
 
-            mode: "no-cors",
 
-            headers: {
-                "Content-Type":
-                    "application/x-www-form-urlencoded;charset=UTF-8"
-            },
+    const response =
+        await fetch(
+            API_URL,
+            {
 
-            body: form.toString()
+                method:
+                    "POST",
 
-        })
+                body:
+                    body
 
-        .then(() => {
+            }
+        );
 
-            resolve({
-                sent: true
-            });
 
-        })
+    /*
+     * Apps Script có thể redirect.
+     */
 
-        .catch(reject);
+    const text =
+        await response.text();
 
-    });
+
+    /*
+     * Nếu trả JSON bình thường
+     */
+
+    try {
+
+        return JSON.parse(
+            text
+        );
+
+    } catch (err) {
+
+        /*
+         * Với một số môi trường,
+         * POST Apps Script có thể không
+         * trả JSON đọc được từ browser.
+         */
+
+        return {
+
+            success: true
+
+        };
+
+    }
 
 }
 
 
 /* =========================================================
-   LOAD TOÀN BỘ SETTING - CHỈ 1 LẦN
+   LOAD SETTING
+   =========================================================
+   
+   CHỈ GỌI API 1 LẦN
    ========================================================= */
 
 async function loadSettingData() {
 
     try {
 
-        $("moHinh").innerHTML =
-            `<option value="">Đang tải...</option>`;
+        SETTING_LOADED =
+            false;
 
-        $("kho").innerHTML =
-            `<option value="">-- Chọn mô hình trước --</option>`;
 
-        $("ca").innerHTML =
-            `<option value="">-- Chọn bưu cục trước --</option>`;
+        /*
+         * Hiển thị loading
+         */
 
+        if ($("moHinh")) {
+
+            $("moHinh").innerHTML = `
+
+                <option value="">
+                    Đang tải mô hình...
+                </option>
+
+            `;
+
+        }
+
+
+        if ($("kho")) {
+
+            $("kho").innerHTML = `
+
+                <option value="">
+                    -- Chọn mô hình trước --
+                </option>
+
+            `;
+
+        }
+
+
+        if ($("ca")) {
+
+            $("ca").innerHTML = `
+
+                <option value="">
+                    -- Chọn bưu cục trước --
+                </option>
+
+            `;
+
+        }
+
+
+        /*
+         * Gọi API duy nhất
+         */
 
         const result =
-            await apiGet("getSettingData");
+            await apiGet(
+                "getSettingData"
+            );
 
 
-        if (!result || !result.success) {
+        if (
+            !result ||
+            result.success !== true
+        ) {
 
             throw new Error(
                 result?.message ||
-                "Không tải được dữ liệu cài đặt."
+                "Không tải được dữ liệu SETTING."
             );
 
         }
 
 
+        /*
+         * Lưu toàn bộ dữ liệu
+         * vào trình duyệt
+         */
+
         SETTING_DATA =
-            result.data || [];
+            Array.isArray(
+                result.data
+            )
+                ? result.data
+                : [];
 
 
-        SETTING_LOADED = true;
+        SETTING_LOADED =
+            true;
 
 
-        /* -----------------------------------------
-           LOAD MÔ HÌNH
-        ----------------------------------------- */
+        /*
+         * Lấy danh sách Mô hình
+         */
 
         const models = [
+
             ...new Set(
+
                 SETTING_DATA
-                    .map(x => String(x.moHinh || "").trim())
-                    .filter(Boolean)
+
+                    .map(
+                        function(item) {
+
+                            return String(
+                                item.moHinh ||
+                                ""
+                            ).trim();
+
+                        }
+                    )
+
+                    .filter(
+                        function(value) {
+
+                            return (
+                                value !== ""
+                            );
+
+                        }
+                    )
+
             )
+
         ];
 
 
-        $("moHinh").innerHTML =
-            `<option value="">-- Chọn mô hình --</option>` +
+        /*
+         * Render Mô hình
+         */
 
-            models.map(model => `
-                <option value="${escapeHtml(model)}">
-                    ${escapeHtml(model)}
+        $("moHinh").innerHTML = `
+
+            <option value="">
+                -- Chọn mô hình --
+            </option>
+
+            ${
+                models
+                    .map(
+                        function(model) {
+
+                            return `
+
+                                <option
+                                    value="${escapeHtml(model)}"
+                                >
+
+                                    ${escapeHtml(model)}
+
+                                </option>
+
+                            `;
+
+                        }
+                    )
+                    .join("")
+            }
+
+        `;
+
+
+    } catch (error) {
+
+        console.error(
+            "loadSettingData:",
+            error
+        );
+
+
+        SETTING_LOADED =
+            false;
+
+
+        if ($("moHinh")) {
+
+            $("moHinh").innerHTML = `
+
+                <option value="">
+                    Không tải được dữ liệu
                 </option>
-            `).join("");
 
+            `;
 
-    } catch (err) {
+        }
+
 
         showMessage(
-            err.message,
+            error.message ||
+            "Không tải được dữ liệu SETTING.",
             "LỖI"
         );
 
@@ -313,115 +599,320 @@ async function loadSettingData() {
 
 
 /* =========================================================
-   LOAD BƯU CỤC - KHÔNG GỌI API
+   LOAD KHO THEO MÔ HÌNH
+   =========================================================
+   
+   KHÔNG GỌI API
+   LỌC LOCAL
    ========================================================= */
 
-function loadKhoByMoHinh(moHinh) {
+function loadKhoByMoHinh(
+    moHinh
+) {
 
-    resetKho();
+    /*
+     * Reset Kho
+     */
 
-    resetCa();
+    $("kho").innerHTML = `
 
+        <option value="">
+            -- Chọn bưu cục --
+        </option>
 
-    if (!moHinh) return;
-
-
-    const list = [
-        ...new Set(
-
-            SETTING_DATA
-
-                .filter(x =>
-                    String(x.moHinh).trim() ===
-                    String(moHinh).trim()
-                )
-
-                .map(x =>
-                    String(x.kho).trim()
-                )
-
-                .filter(Boolean)
-
-        )
-    ];
+    `;
 
 
-    $("kho").innerHTML =
-        `<option value="">-- Chọn bưu cục --</option>` +
+    /*
+     * Reset Ca
+     */
 
-        list.map(kho => `
-            <option value="${escapeHtml(kho)}">
-                ${escapeHtml(kho)}
-            </option>
-        `).join("");
+    $("ca").innerHTML = `
 
-}
-
-
-/* =========================================================
-   LOAD CA - KHÔNG GỌI API
-   ========================================================= */
-
-function loadCa(kho) {
-
-    resetCa();
-
-
-    if (!kho) return;
-
-
-    const list = [
-        ...new Set(
-
-            SETTING_DATA
-
-                .filter(x =>
-                    String(x.kho).trim() ===
-                    String(kho).trim()
-                )
-
-                .map(x =>
-                    String(x.ca).trim()
-                )
-
-                .filter(Boolean)
-
-        )
-    ];
-
-
-    $("ca").innerHTML =
-        `<option value="">-- Chọn ca --</option>` +
-
-        list.map(ca => `
-            <option value="${escapeHtml(ca)}">
-                ${escapeHtml(ca)}
-            </option>
-        `).join("");
-
-}
-
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-function resetKho() {
-
-    $("kho").innerHTML =
-        `<option value="">
-            -- Chọn mô hình trước --
-        </option>`;
-
-}
-
-
-function resetCa() {
-
-    $("ca").innerHTML =
-        `<option value="">
+        <option value="">
             -- Chọn bưu cục trước --
-        </option>`;
+        </option>
+
+    `;
+
+
+    if (!moHinh) {
+
+        $("kho").innerHTML = `
+
+            <option value="">
+                -- Chọn mô hình trước --
+            </option>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+     * Lọc dữ liệu local
+     */
+
+    const khoList = [
+
+        ...new Set(
+
+            SETTING_DATA
+
+                .filter(
+                    function(item) {
+
+                        return (
+
+                            String(
+                                item.moHinh ||
+                                ""
+                            ).trim() ===
+
+                            String(
+                                moHinh
+                            ).trim()
+
+                        );
+
+                    }
+                )
+
+                .map(
+                    function(item) {
+
+                        return String(
+                            item.kho ||
+                            ""
+                        ).trim();
+
+                    }
+                )
+
+                .filter(
+                    function(value) {
+
+                        return (
+                            value !== ""
+                        );
+
+                    }
+                )
+
+        )
+
+    ];
+
+
+    /*
+     * Không có kho
+     */
+
+    if (
+        khoList.length === 0
+    ) {
+
+        $("kho").innerHTML = `
+
+            <option value="">
+                Không có bưu cục
+            </option>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+     * Render Kho
+     */
+
+    $("kho").innerHTML = `
+
+        <option value="">
+            -- Chọn bưu cục --
+        </option>
+
+        ${
+            khoList
+                .map(
+                    function(kho) {
+
+                        return `
+
+                            <option
+                                value="${escapeHtml(kho)}"
+                            >
+
+                                ${escapeHtml(kho)}
+
+                            </option>
+
+                        `;
+
+                    }
+                )
+                .join("")
+        }
+
+    `;
+
+}
+
+
+/* =========================================================
+   LOAD CA THEO KHO
+   =========================================================
+   
+   KHÔNG GỌI API
+   LỌC LOCAL
+   ========================================================= */
+
+function loadCa(
+    kho
+) {
+
+    /*
+     * Reset Ca
+     */
+
+    $("ca").innerHTML = `
+
+        <option value="">
+            -- Chọn ca --
+        </option>
+
+    `;
+
+
+    if (!kho) {
+
+        $("ca").innerHTML = `
+
+            <option value="">
+                -- Chọn bưu cục trước --
+            </option>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+     * Lọc Ca local
+     */
+
+    const caList = [
+
+        ...new Set(
+
+            SETTING_DATA
+
+                .filter(
+                    function(item) {
+
+                        return (
+
+                            String(
+                                item.kho ||
+                                ""
+                            ).trim() ===
+
+                            String(
+                                kho
+                            ).trim()
+
+                        );
+
+                    }
+                )
+
+                .map(
+                    function(item) {
+
+                        return String(
+                            item.ca ||
+                            ""
+                        ).trim();
+
+                    }
+                )
+
+                .filter(
+                    function(value) {
+
+                        return (
+                            value !== ""
+                        );
+
+                    }
+                )
+
+        )
+
+    ];
+
+
+    /*
+     * Không có ca
+     */
+
+    if (
+        caList.length === 0
+    ) {
+
+        $("ca").innerHTML = `
+
+            <option value="">
+                Không có ca
+            </option>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+     * Render Ca
+     */
+
+    $("ca").innerHTML = `
+
+        <option value="">
+            -- Chọn ca --
+        </option>
+
+        ${
+            caList
+                .map(
+                    function(ca) {
+
+                        return `
+
+                            <option
+                                value="${escapeHtml(ca)}"
+                            >
+
+                                ${escapeHtml(ca)}
+
+                            </option>
+
+                        `;
+
+                    }
+                )
+                .join("")
+        }
+
+    `;
 
 }
 
@@ -435,83 +926,149 @@ async function checkIn() {
     const data = {
 
         moHinh:
-            $("moHinh").value,
+            $("moHinh")
+                ?.value
+                .trim(),
 
         kho:
-            $("kho").value,
+            $("kho")
+                ?.value
+                .trim(),
 
         ca:
-            $("ca").value,
+            $("ca")
+                ?.value
+                .trim(),
 
         hoten:
-            $("hoten").value.trim(),
+            $("hoten")
+                ?.value
+                .trim(),
 
         manv:
-            $("manv").value.trim(),
+            $("manv")
+                ?.value
+                .trim(),
 
         sdt:
-            $("sdt").value.trim()
+            $("sdt")
+                ?.value
+                .trim()
 
     };
 
 
-    if (!data.moHinh)
-        return showMessage(
+    /*
+     * Validate
+     */
+
+    if (!data.moHinh) {
+
+        showMessage(
             "Vui lòng chọn mô hình."
         );
 
+        return;
 
-    if (!data.kho)
-        return showMessage(
+    }
+
+
+    if (!data.kho) {
+
+        showMessage(
             "Vui lòng chọn bưu cục."
         );
 
+        return;
 
-    if (!data.ca)
-        return showMessage(
+    }
+
+
+    if (!data.ca) {
+
+        showMessage(
             "Vui lòng chọn ca."
         );
 
+        return;
 
-    if (!data.hoten)
-        return showMessage(
+    }
+
+
+    if (!data.hoten) {
+
+        showMessage(
             "Vui lòng nhập họ tên."
         );
 
+        return;
 
-    if (!data.manv)
-        return showMessage(
+    }
+
+
+    if (!data.manv) {
+
+        showMessage(
             "Vui lòng nhập mã nhân viên."
         );
 
+        return;
 
-    const btn =
+    }
+
+
+    /*
+     * Button
+     */
+
+    const button =
+        $("checkInButton") ||
         $("checkInBtn");
 
-    const old =
-        btn.innerHTML;
+
+    const oldText =
+        button
+            ? button.innerHTML
+            : "";
 
 
-    btn.disabled = true;
+    if (button) {
 
-    btn.innerHTML =
-        "ĐANG CHECK IN...";
+        button.disabled =
+            true;
+
+        button.innerHTML = `
+
+            <span
+                class="spinner-border spinner-border-sm"
+            ></span>
+
+            ĐANG CHECK IN...
+
+        `;
+
+    }
 
 
     try {
 
-        const current =
+        /*
+         * Kiểm tra nhân viên
+         */
+
+        const check =
             await apiGet(
                 "getCheckInInfo",
                 {
-                    manv: data.manv
+                    manv:
+                        data.manv
                 }
             );
 
 
         if (
-            current &&
-            current.success
+            check &&
+            check.success
         ) {
 
             showMessage(
@@ -524,39 +1081,93 @@ async function checkIn() {
         }
 
 
-        await apiPost(
-            "checkIn",
-            data
-        );
+        /*
+         * Gửi Check In
+         */
 
+        const result =
+            await apiPost(
+                "checkIn",
+                data
+            );
+
+
+        /*
+         * Nếu backend trả kết quả
+         */
+
+        if (
+            result &&
+            result.success === false
+        ) {
+
+            showMessage(
+                result.message ||
+                "CHECK IN không thành công.",
+                "THÔNG BÁO"
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Thành công
+         */
 
         showMessage(
-            "CHECK IN đã được ghi nhận.",
+            "CHECK IN thành công.",
             "THÀNH CÔNG"
         );
 
 
-        $("hoten").value = "";
+        /*
+         * Reset input
+         */
 
-        $("manv").value = "";
-
-        $("sdt").value = "";
-
-        $("ca").selectedIndex = 0;
+        if ($("hoten"))
+            $("hoten").value = "";
 
 
-    } catch (err) {
+        if ($("manv"))
+            $("manv").value = "";
+
+
+        if ($("sdt"))
+            $("sdt").value = "";
+
+
+        if ($("ca"))
+            $("ca").selectedIndex = 0;
+
+
+    } catch (error) {
+
+        console.error(
+            "checkIn:",
+            error
+        );
+
 
         showMessage(
-            err.message,
+            error.message ||
+            "Không thể CHECK IN.",
             "LỖI"
         );
 
+
     } finally {
 
-        btn.disabled = false;
+        if (button) {
 
-        btn.innerHTML = old;
+            button.disabled =
+                false;
+
+            button.innerHTML =
+                oldText;
+
+        }
 
     }
 
@@ -569,10 +1180,14 @@ async function checkIn() {
 
 async function kiemTraCheckOut() {
 
+    const input =
+        $("checkoutManv");
+
+
     const manv =
-        $("checkoutManv")
-            .value
-            .trim();
+        input
+            ? input.value.trim()
+            : "";
 
 
     if (!manv) {
@@ -586,34 +1201,57 @@ async function kiemTraCheckOut() {
     }
 
 
-    const btn =
-        $("checkInfoBtn");
+    const button =
+        $("checkInfoBtn") ||
+        document.querySelector(
+            '[onclick="kiemTraCheckOut()"]'
+        );
 
-    const old =
-        btn.innerHTML;
+
+    const oldText =
+        button
+            ? button.innerHTML
+            : "";
 
 
-    btn.disabled = true;
+    if (button) {
 
-    btn.innerHTML =
-        "ĐANG KIỂM TRA...";
+        button.disabled =
+            true;
+
+        button.innerHTML = `
+
+            <span
+                class="spinner-border spinner-border-sm"
+            ></span>
+
+            ĐANG KIỂM TRA...
+
+        `;
+
+    }
 
 
     try {
 
-        const res =
+        const result =
             await apiGet(
                 "getCheckInInfo",
                 {
-                    manv
+                    manv:
+                        manv
                 }
             );
 
 
-        if (!res.success) {
+        if (
+            !result ||
+            result.success !== true
+        ) {
 
             showMessage(
-                res.message,
+                result?.message ||
+                "Không tìm thấy dữ liệu CHECK IN.",
                 "THÔNG BÁO"
             );
 
@@ -622,9 +1260,17 @@ async function kiemTraCheckOut() {
         }
 
 
-        $("checkoutRow").value =
-            res.row;
+        /*
+         * Lưu row
+         */
 
+        $("checkoutRow").value =
+            result.row;
+
+
+        /*
+         * Hiển thị thông tin
+         */
 
         $("checkoutInfo").innerHTML = `
 
@@ -634,67 +1280,100 @@ async function kiemTraCheckOut() {
 
                 <b>Họ tên</b><br>
 
-                ${escapeHtml(res.hoten)}
+                ${escapeHtml(
+                    result.hoten
+                )}
 
             </div>
+
 
             <div class="mb-3">
 
                 <b>Kho</b><br>
 
-                ${escapeHtml(res.kho)}
+                ${escapeHtml(
+                    result.kho
+                )}
 
             </div>
+
 
             <div class="mb-3">
 
                 <b>Ca làm việc</b><br>
 
-                ${escapeHtml(res.ca)}
+                ${escapeHtml(
+                    result.ca
+                )}
 
             </div>
+
 
             <div class="mb-4">
 
                 <b>Giờ Check In</b><br>
 
-                ${escapeHtml(res.checkin)}
+                ${escapeHtml(
+                    result.checkin
+                )}
 
             </div>
+
 
             <button
                 type="button"
                 class="btn btn-ghn w-100"
-                id="checkoutBtn"
+                id="checkoutButton"
             >
 
-                <i class="bi bi-box-arrow-right"></i>
+                <i
+                    class="bi bi-box-arrow-right"
+                ></i>
 
                 CHECK OUT
 
             </button>
+
         `;
 
 
-        $("checkoutBtn")
+        /*
+         * Gắn event
+         */
+
+        $("checkoutButton")
             .addEventListener(
                 "click",
                 checkOut
             );
 
 
-    } catch (err) {
+    } catch (error) {
+
+        console.error(
+            "kiemTraCheckOut:",
+            error
+        );
+
 
         showMessage(
-            err.message,
+            error.message ||
+            "Không thể kiểm tra CHECK OUT.",
             "LỖI"
         );
 
+
     } finally {
 
-        btn.disabled = false;
+        if (button) {
 
-        btn.innerHTML = old;
+            button.disabled =
+                false;
+
+            button.innerHTML =
+                oldText;
+
+        }
 
     }
 
@@ -709,14 +1388,16 @@ async function checkOut() {
 
     const row =
         Number(
-            $("checkoutRow").value
+            $("checkoutRow")
+                ?.value
         );
 
 
     if (!row) {
 
         showMessage(
-            "Không tìm thấy dữ liệu CHECK IN."
+            "Không tìm thấy dữ liệu CHECK IN.",
+            "THÔNG BÁO"
         );
 
         return;
@@ -724,31 +1405,107 @@ async function checkOut() {
     }
 
 
+    const button =
+        $("checkoutButton");
+
+
+    const oldText =
+        button
+            ? button.innerHTML
+            : "";
+
+
+    if (button) {
+
+        button.disabled =
+            true;
+
+        button.innerHTML = `
+
+            <span
+                class="spinner-border spinner-border-sm"
+            ></span>
+
+            ĐANG CHECK OUT...
+
+        `;
+
+    }
+
+
     try {
 
-        await apiPost(
-            "checkOut",
-            {
-                rowNumber:
-                    String(row)
-            }
-        );
+        const result =
+            await apiGet(
+                "checkOut",
+                {
+                    rowNumber:
+                        String(row)
+                }
+            );
 
+
+        if (
+            !result ||
+            result.success !== true
+        ) {
+
+            showMessage(
+                result?.message ||
+                "CHECK OUT không thành công.",
+                "THÔNG BÁO"
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Thông báo thành công
+         */
 
         showMessage(
-            "CHECK OUT thành công.",
+
+            "CHECK OUT thành công!\n\n" +
+
+            "Họ tên: " +
+            (result.hoten || "") +
+            "\n\n" +
+
+            "Check In: " +
+            (result.checkin || "") +
+            "\n" +
+
+            "Check Out: " +
+            (result.checkout || "") +
+            "\n\n" +
+
+            "Tổng giờ làm: " +
+            (result.totalText || ""),
+
             "THÀNH CÔNG"
+
         );
 
 
-        $("checkoutRow").value = "";
+        /*
+         * Reset
+         */
 
-        $("checkoutManv").value = "";
+        $("checkoutRow")
+            .value = "";
+
+
+        $("checkoutManv")
+            .value = "";
 
 
         $("checkoutInfo").innerHTML = `
 
-            <div class="text-center text-secondary py-5">
+            <div
+                class="text-center text-secondary py-5"
+            >
 
                 <i
                     class="bi bi-person-check"
@@ -758,14 +1515,20 @@ async function checkOut() {
                     "
                 ></i>
 
+
                 <h5 class="mt-3">
+
                     THÔNG TIN CHECK IN
+
                 </h5>
 
+
                 <p>
+
                     Nhập mã nhân viên và nhấn
                     <b>KIỂM TRA</b>
                     để xem thông tin.
+
                 </p>
 
             </div>
@@ -773,12 +1536,32 @@ async function checkOut() {
         `;
 
 
-    } catch (err) {
+    } catch (error) {
+
+        console.error(
+            "checkOut:",
+            error
+        );
+
 
         showMessage(
-            err.message,
+            error.message ||
+            "Không thể CHECK OUT.",
             "LỖI"
         );
+
+
+    } finally {
+
+        if (button) {
+
+            button.disabled =
+                false;
+
+            button.innerHTML =
+                oldText;
+
+        }
 
     }
 
@@ -791,69 +1574,101 @@ async function checkOut() {
 
 document.addEventListener(
     "DOMContentLoaded",
-    () => {
+    function() {
+
 
         /*
-         * Chỉ gọi Apps Script 1 lần
+         * 1. LOAD SETTING
+         *
+         * Chỉ gọi Apps Script 1 lần.
          */
 
         loadSettingData();
 
 
         /*
-         * Chọn mô hình
+         * 2. MÔ HÌNH → KHO
+         *
+         * Không gọi API.
          */
 
-        $("moHinh")
-            .addEventListener(
-                "change",
-                e => {
+        if ($("moHinh")) {
 
-                    loadKhoByMoHinh(
-                        e.target.value
-                    );
+            $("moHinh")
+                .addEventListener(
+                    "change",
+                    function(event) {
 
-                }
-            );
+                        loadKhoByMoHinh(
+                            event.target.value
+                        );
+
+                    }
+                );
+
+        }
 
 
         /*
-         * Chọn bưu cục
+         * 3. KHO → CA
+         *
+         * Không gọi API.
          */
 
-        $("kho")
-            .addEventListener(
-                "change",
-                e => {
+        if ($("kho")) {
 
-                    loadCa(
-                        e.target.value
-                    );
+            $("kho")
+                .addEventListener(
+                    "change",
+                    function(event) {
 
-                }
-            );
+                        loadCa(
+                            event.target.value
+                        );
+
+                    }
+                );
+
+        }
 
 
         /*
-         * Button Check In
+         * 4. CHECK IN
          */
 
-        $("checkInBtn")
-            .addEventListener(
-                "click",
-                checkIn
-            );
+        const checkInButton =
+            $("checkInButton") ||
+            $("checkInBtn");
+
+
+        if (checkInButton) {
+
+            checkInButton
+                .addEventListener(
+                    "click",
+                    checkIn
+                );
+
+        }
 
 
         /*
-         * Button Check Out
+         * 5. CHECK OUT - KIỂM TRA
          */
 
-        $("checkInfoBtn")
-            .addEventListener(
-                "click",
-                kiemTraCheckOut
-            );
+        const checkInfoButton =
+            $("checkInfoBtn");
+
+
+        if (checkInfoButton) {
+
+            checkInfoButton
+                .addEventListener(
+                    "click",
+                    kiemTraCheckOut
+                );
+
+        }
 
     }
 );
