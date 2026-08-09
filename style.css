@@ -1,18 +1,31 @@
 /* =========================================================
    GHN ATTENDANCE
-   RESPONSIVE MOBILE UI
+   MOBILE FIRST
    ========================================================= */
 
+
 :root {
+
     --bg: #071418;
-    --bg-dark: #061216;
+
+    --bg-2: #0a1d23;
+
     --card: #0b2027;
+
+    --card-2: #0d252d;
+
     --input: #19343b;
+
     --primary: #00d2d3;
+
     --primary-light: #00e5ff;
-    --border: #08d9df;
+
+    --border: #10d7dc;
+
     --text: #ffffff;
+
     --muted: #91b5ba;
+
 }
 
 
@@ -21,39 +34,53 @@
    ========================================================= */
 
 * {
+
     margin: 0;
+
     padding: 0;
+
     box-sizing: border-box;
+
 }
 
 
-/* =========================================================
-   HTML / BODY
-   ========================================================= */
-
 html {
+
     width: 100%;
+
+    min-width: 0;
+
     min-height: 100%;
+
     font-size: 16px;
 
     -webkit-text-size-adjust: 100%;
+
     text-size-adjust: 100%;
 
-    scroll-behavior: smooth;
 }
 
 
 body {
+
     width: 100%;
+
+    min-width: 0;
+
     min-height: 100vh;
 
+    overflow-x: hidden;
+
     background:
+
         radial-gradient(
-            circle at top center,
+            circle at 50% 0%,
             #123d45 0%,
-            #071418 42%,
+            #071418 38%,
             #061115 100%
         );
+
+    background-attachment: fixed;
 
     color: var(--text);
 
@@ -62,9 +89,21 @@ body {
         Arial,
         sans-serif;
 
-    overflow-x: hidden;
-
     -webkit-font-smoothing: antialiased;
+
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.page {
+
+    width: 100%;
+
+    min-height: 100vh;
+
 }
 
 
@@ -72,37 +111,47 @@ body {
    CONTAINER
    ========================================================= */
 
-.container-fluid {
-    width: 100%;
-    padding: 28px;
-}
+.app-container {
 
-
-.container {
     width: 100%;
-    max-width: 1200px;
+
+    max-width: 1240px;
+
     margin-left: auto;
+
     margin-right: auto;
+
 }
 
 
 /* =========================================================
-   HEADER BANNER
+   HEADER
+   ========================================================= */
+
+header.app-container {
+
+    padding-top: 24px;
+
+}
+
+
+/* =========================================================
+   BANNER
    ========================================================= */
 
 .header-banner {
 
     width: 100%;
 
-    height: 250px;
-
-    margin-bottom: 36px;
+    height: 260px;
 
     border-radius: 28px;
 
-    border: 1.5px solid var(--primary-light);
+    border: 1px solid var(--primary-light);
 
     overflow: hidden;
+
+    background-color: var(--bg);
 
     background-image:
         url("https://raw.githubusercontent.com/duynh1998/Banner/main/ChatGPT%20Image%2013_10_56%204%20thg%208%2C%202026.png");
@@ -113,27 +162,27 @@ body {
 
     background-position: center center;
 
-    background-color: #071418;
-
     box-shadow:
-        0 0 20px rgba(0, 229, 255, 0.18),
-        inset 0 0 20px rgba(0, 229, 255, 0.05);
+
+        0 0 24px
+        rgba(0, 229, 255, 0.18),
+
+        inset 0 0 25px
+        rgba(0, 229, 255, 0.05);
+
 }
 
 
 /* =========================================================
-   ROW
+   MAIN
    ========================================================= */
 
-.row {
-    margin-left: -10px;
-    margin-right: -10px;
-}
+main.app-container {
 
+    padding-top: 30px;
 
-.row > * {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-bottom: 8px;
+
 }
 
 
@@ -145,44 +194,38 @@ body {
 
     width: 100%;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(11, 32, 39, 0.98),
-            rgba(7, 25, 31, 0.98)
-        );
+    min-width: 0;
 
-    border: 1.5px solid var(--border);
+    padding: 32px;
 
     border-radius: 26px;
 
-    padding: 30px;
+    border: 1px solid var(--border);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(11, 32, 39, 0.98),
+            rgba(7, 24, 30, 0.98)
+        );
 
     box-shadow:
-        0 0 20px rgba(0, 210, 211, 0.12),
-        inset 0 0 20px rgba(0, 210, 211, 0.025);
 
-    margin-bottom: 24px;
+        0 0 22px
+        rgba(0, 210, 211, 0.12),
 
-    transition: 0.25s ease;
-}
+        inset 0 0 22px
+        rgba(0, 210, 211, 0.025);
 
-
-.glass-card:hover {
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 0 28px rgba(0, 229, 255, 0.20),
-        inset 0 0 20px rgba(0, 210, 211, 0.04);
 }
 
 
 /* =========================================================
-   CARD TITLE
+   TITLE
    ========================================================= */
 
-.glass-card h4 {
+.section-title {
 
     display: flex;
 
@@ -192,19 +235,16 @@ body {
 
     color: var(--primary-light);
 
-    font-size: 28px;
-
-    line-height: 1.2;
+    font-size: 27px;
 
     font-weight: 800;
 
-    margin: 0;
+    line-height: 1.2;
 
-    letter-spacing: 0.2px;
 }
 
 
-.glass-card h4 i {
+.section-title i {
 
     font-size: 32px;
 
@@ -217,19 +257,23 @@ body {
    DIVIDER
    ========================================================= */
 
-hr {
+.section-divider {
+
+    width: 100%;
 
     height: 1px;
 
-    border: 0;
-
-    border-top: 1px solid var(--border);
-
-    opacity: 0.55;
-
-    margin-top: 24px;
+    margin-top: 22px;
 
     margin-bottom: 30px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 229, 255, .65),
+            rgba(0, 229, 255, .15)
+        );
+
 }
 
 
@@ -237,15 +281,12 @@ hr {
    FORM GROUP
    ========================================================= */
 
-/*
-   Đây là phần chính sửa lỗi trong ảnh:
-   Label → khoảng cách → Input
-   Input → khoảng cách → Label tiếp theo
-*/
+.form-group {
 
-.mb-3 {
+    width: 100%;
 
-    margin-bottom: 22px !important;
+    margin-bottom: 22px;
+
 }
 
 
@@ -253,26 +294,27 @@ hr {
    LABEL
    ========================================================= */
 
-label {
+.form-group label {
 
     display: block;
 
-    color: #ffffff;
-
-    font-size: 18px;
-
-    line-height: 1.3;
-
-    font-weight: 700;
+    width: 100%;
 
     margin-bottom: 10px;
 
-    letter-spacing: 0.1px;
+    color: #ffffff;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    line-height: 1.35;
+
 }
 
 
 /* =========================================================
-   INPUT + SELECT
+   INPUT / SELECT
    ========================================================= */
 
 .form-control,
@@ -282,49 +324,50 @@ label {
 
     width: 100%;
 
-    min-height: 58px;
+    height: 56px;
 
-    height: 58px;
+    min-height: 56px;
 
     padding:
-        0 18px;
+        0 17px;
 
-    background:
-        #19343b;
+    border:
+        1px solid var(--primary);
+
+    border-radius: 14px;
+
+    background: var(--input);
 
     color: #ffffff;
 
-    border:
-        1.5px solid var(--primary);
-
-    border-radius: 16px;
-
-    font-size: 18px;
+    font-size: 16px;
 
     font-weight: 500;
 
     line-height: 1.4;
 
-    box-shadow: none;
-
     outline: none;
 
+    box-shadow: none;
+
     transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+
 }
 
 
 /* =========================================================
-   INPUT PLACEHOLDER
+   PLACEHOLDER
    ========================================================= */
 
 .form-control::placeholder {
 
-    color: #8eb2b7;
+    color: #8daeb3;
 
     opacity: 1;
+
 }
 
 
@@ -336,11 +379,15 @@ label {
 
     cursor: pointer;
 
-    padding-right: 48px;
+}
 
-    appearance: auto;
 
-    -webkit-appearance: auto;
+.form-select option {
+
+    background: #0b2027;
+
+    color: #ffffff;
+
 }
 
 
@@ -351,68 +398,68 @@ label {
 .form-control:focus,
 .form-select:focus {
 
-    background: #1b3941;
+    background: #1b3a42;
 
     color: #ffffff;
 
     border-color: var(--primary-light);
 
     box-shadow:
-        0 0 0 2px rgba(0, 229, 255, 0.08),
-        0 0 15px rgba(0, 229, 255, 0.18);
 
-    outline: none;
+        0 0 0 2px
+        rgba(0, 229, 255, .06),
+
+        0 0 15px
+        rgba(0, 229, 255, .16);
+
 }
 
 
 /* =========================================================
-   SELECT OPTION
-   ========================================================= */
-
-.form-select option {
-
-    background: #0b2027;
-
-    color: #ffffff;
-}
-
-
-/* =========================================================
-   BUTTON GHN
+   CHECK IN BUTTON
    ========================================================= */
 
 .btn-ghn {
 
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
     width: 100%;
 
-    min-height: 60px;
+    height: 58px;
 
-    padding:
-        14px 20px;
+    min-height: 58px;
+
+    margin-top: 4px;
+
+    border: none;
+
+    border-radius: 14px;
 
     background:
         linear-gradient(
             135deg,
-            #00cdd0,
-            #00dfe1
+            #00cfd1,
+            #00e0e2
         );
 
-    color: #001316;
+    color: #001416;
 
-    border: none;
-
-    border-radius: 16px;
-
-    font-size: 20px;
+    font-size: 18px;
 
     font-weight: 800;
 
-    letter-spacing: 0.2px;
-
     box-shadow:
-        0 5px 18px rgba(0, 210, 211, 0.18);
+        0 5px 18px
+        rgba(0, 210, 211, .18);
 
-    transition: 0.2s ease;
+    transition: .2s ease;
+
 }
 
 
@@ -425,12 +472,10 @@ label {
             #0af4f5
         );
 
-    color: #001316;
+    color: #001416;
 
     transform: translateY(-1px);
 
-    box-shadow:
-        0 8px 24px rgba(0, 229, 255, 0.25);
 }
 
 
@@ -442,35 +487,52 @@ label {
 
 
 /* =========================================================
-   OUTLINE BUTTON
+   CHECK OUT BUTTON
    ========================================================= */
 
-.btn-outline-info {
+.btn-checkout {
 
-    min-height: 58px;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    width: 100%;
+
+    height: 56px;
+
+    min-height: 56px;
+
+    margin-top: 2px;
 
     border:
-        1.5px solid var(--primary);
+        1px solid var(--primary);
 
-    border-radius: 16px;
-
-    color: var(--primary-light);
-
-    font-size: 18px;
-
-    font-weight: 700;
+    border-radius: 14px;
 
     background: transparent;
 
-    transition: 0.2s ease;
+    color: var(--primary-light);
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    transition: .2s ease;
+
 }
 
 
-.btn-outline-info:hover {
+.btn-checkout:hover {
 
-    background: rgba(0, 229, 255, 0.08);
+    background:
+        rgba(0, 229, 255, .08);
 
-    border-color: var(--primary-light);
+    border-color:
+        var(--primary-light);
 
     color: #ffffff;
 
@@ -481,27 +543,73 @@ label {
    CHECKOUT INFO
    ========================================================= */
 
-#checkoutInfo {
+.checkout-info {
 
-    min-height: 220px;
+    width: 100%;
 
-    margin-top: 26px !important;
+    min-width: 0;
+
+    margin-top: 28px;
 
 }
 
 
-#checkoutInfo h5 {
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+
+    min-height: 220px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 25px 15px;
+
+}
+
+
+.empty-state > i {
+
+    margin-bottom: 15px;
 
     color: var(--primary-light);
+
+    font-size: 54px;
+
+}
+
+
+.empty-state h5 {
+
+    margin-bottom: 10px;
+
+    color: var(--primary-light);
+
+    font-size: 18px;
 
     font-weight: 700;
 
 }
 
 
-#checkoutInfo p {
+.empty-state p {
 
-    color: #c8d9dc;
+    max-width: 420px;
+
+    margin: 0;
+
+    color: #c6d8db;
+
+    font-size: 15px;
 
     line-height: 1.6;
 
@@ -509,24 +617,25 @@ label {
 
 
 /* =========================================================
-   CHECKOUT INFORMATION
+   CHECKOUT INFORMATION BOX
    ========================================================= */
 
-#checkoutInfo .mb-3,
-#checkoutInfo .mb-4 {
+.checkout-info .mb-3,
+.checkout-info .mb-4 {
 
     padding: 14px 16px;
 
     margin-bottom: 12px !important;
 
-    background: rgba(25, 52, 59, 0.65);
-
     border-radius: 12px;
+
+    background:
+        rgba(25, 52, 59, .65);
 
 }
 
 
-#checkoutInfo b {
+.checkout-info b {
 
     color: var(--primary-light);
 
@@ -537,9 +646,23 @@ label {
    FOOTER
    ========================================================= */
 
-.text-secondary {
+footer.app-container {
 
-    color: #76959a !important;
+    padding-bottom: 20px;
+
+}
+
+
+.footer {
+
+    padding: 8px;
+
+    text-align: center;
+
+    color: #6f8e93;
+
+    font-size: 13px;
+
 }
 
 
@@ -549,9 +672,19 @@ label {
 
 @media (max-width: 991.98px) {
 
-    .container-fluid {
+    header.app-container {
 
-        padding: 22px;
+        padding-top: 18px;
+
+    }
+
+
+    .app-container {
+
+        padding-left: 18px;
+
+        padding-right: 18px;
+
     }
 
 
@@ -559,17 +692,22 @@ label {
 
         height: 190px;
 
-        margin-bottom: 28px;
+        border-radius: 22px;
 
-        border-radius: 24px;
+    }
+
+
+    main.app-container {
+
+        padding-top: 24px;
+
     }
 
 
     .glass-card {
 
-        padding: 26px;
+        padding: 28px;
 
-        border-radius: 24px;
     }
 
 }
@@ -581,50 +719,53 @@ label {
 
 @media (max-width: 767.98px) {
 
+
     html,
     body {
 
-        width: 100%;
+        width: 100% !important;
 
-        min-width: 0;
+        max-width: 100% !important;
 
-        max-width: 100%;
+        min-width: 0 !important;
 
-        overflow-x: hidden;
+        overflow-x: hidden !important;
+
     }
 
 
     body {
 
         font-size: 16px;
+
     }
 
 
     /* -----------------------------------------
-       MAIN CONTAINER
+       CONTAINER
     ----------------------------------------- */
 
-    .container-fluid {
+    .app-container {
 
-        width: 100%;
+        width: 100% !important;
 
-        padding:
-            16px
-            14px
-            24px
-            14px;
+        max-width: 100% !important;
+
+        padding-left: 14px !important;
+
+        padding-right: 14px !important;
+
     }
 
 
-    .container {
+    /* -----------------------------------------
+       HEADER
+    ----------------------------------------- */
 
-        width: 100%;
+    header.app-container {
 
-        max-width: 100%;
+        padding-top: 14px !important;
 
-        padding-left: 0;
-
-        padding-right: 0;
     }
 
 
@@ -638,14 +779,25 @@ label {
 
         height: 145px;
 
-        margin-bottom: 24px;
+        border-radius: 18px;
 
-        border-radius: 20px;
+        margin: 0;
 
         background-position: center center;
 
-        box-shadow:
-            0 0 18px rgba(0, 229, 255, 0.16);
+    }
+
+
+    /* -----------------------------------------
+       MAIN
+    ----------------------------------------- */
+
+    main.app-container {
+
+        padding-top: 24px !important;
+
+        padding-bottom: 4px !important;
+
     }
 
 
@@ -655,17 +807,8 @@ label {
 
     .row {
 
-        margin-left: 0;
+        --bs-gutter-y: 18px;
 
-        margin-right: 0;
-    }
-
-
-    .row > * {
-
-        padding-left: 0;
-
-        padding-right: 0;
     }
 
 
@@ -678,15 +821,12 @@ label {
         width: 100%;
 
         padding:
-            24px
-            18px
+            23px
+            17px
             22px;
 
-        margin-bottom: 20px;
+        border-radius: 21px;
 
-        border-radius: 22px;
-
-        border-width: 1.5px;
     }
 
 
@@ -694,19 +834,19 @@ label {
        TITLE
     ----------------------------------------- */
 
-    .glass-card h4 {
+    .section-title {
 
-        font-size: 27px;
+        font-size: 24px;
 
         gap: 10px;
 
-        margin-bottom: 0;
     }
 
 
-    .glass-card h4 i {
+    .section-title i {
 
-        font-size: 31px;
+        font-size: 29px;
+
     }
 
 
@@ -714,22 +854,34 @@ label {
        DIVIDER
     ----------------------------------------- */
 
-    hr {
+    .section-divider {
 
-        margin-top: 22px;
+        margin-top: 20px;
 
-        margin-bottom: 28px;
+        margin-bottom: 27px;
+
     }
 
 
     /* -----------------------------------------
        FORM GROUP
-       Label → Input
+       
+       Tạo khoảng cách rõ ràng:
+       label
+          ↓
+       10px
+          ↓
+       input
+          ↓
+       21px
+          ↓
+       label tiếp theo
     ----------------------------------------- */
 
-    .mb-3 {
+    .form-group {
 
-        margin-bottom: 21px !important;
+        margin-bottom: 21px;
+
     }
 
 
@@ -737,18 +889,19 @@ label {
        LABEL
     ----------------------------------------- */
 
-    label {
+    .form-group label {
 
-        font-size: 18px;
+        margin-bottom: 10px;
 
-        margin-bottom: 9px;
+        font-size: 16px;
 
-        line-height: 1.35;
     }
 
 
     /* -----------------------------------------
        INPUT
+       
+       16px để iPhone không tự zoom
     ----------------------------------------- */
 
     .form-control,
@@ -756,45 +909,54 @@ label {
 
         width: 100%;
 
-        height: 58px;
+        height: 56px;
 
-        min-height: 58px;
+        min-height: 56px;
 
-        padding-left: 16px;
+        padding-left: 15px;
 
-        padding-right: 16px;
+        padding-right: 15px;
 
-        border-radius: 15px;
+        border-radius: 14px;
 
-        font-size: 18px;
+        font-size: 16px !important;
+
     }
 
 
     /* -----------------------------------------
-       BUTTON
+       CHECK IN BUTTON
     ----------------------------------------- */
 
     .btn-ghn {
 
-        min-height: 60px;
-
-        height: 60px;
-
-        border-radius: 16px;
-
-        font-size: 19px;
-
-        margin-top: 2px;
-    }
-
-
-    .btn-outline-info {
+        height: 58px;
 
         min-height: 58px;
 
-        height: 58px;
+        margin-top: 2px;
 
-        border-radius: 15px;
+        border-radius: 14px;
+
+        font-size: 17px;
+
+    }
+
+
+    /* -----------------------------------------
+       CHECK OUT BUTTON
+    ----------------------------------------- */
+
+    .btn-checkout {
+
+        height: 56px;
+
+        min-height: 56px;
+
+        border-radius: 14px;
+
+        font-size: 16px;
+
     }
 
 
@@ -802,11 +964,44 @@ label {
        CHECKOUT
     ----------------------------------------- */
 
-    #checkoutInfo {
+    .checkout-info {
 
-        margin-top: 22px !important;
+        margin-top: 24px;
 
-        min-height: 190px;
+    }
+
+
+    .empty-state {
+
+        min-height: 180px;
+
+        padding:
+            20px
+            10px;
+
+    }
+
+
+    .empty-state > i {
+
+        font-size: 48px;
+
+        margin-bottom: 12px;
+
+    }
+
+
+    .empty-state h5 {
+
+        font-size: 17px;
+
+    }
+
+
+    .empty-state p {
+
+        font-size: 14px;
+
     }
 
 
@@ -814,97 +1009,182 @@ label {
        FOOTER
     ----------------------------------------- */
 
-    .text-center {
+    footer.app-container {
 
-        padding-top: 8px !important;
+        padding-bottom:
+            max(
+                18px,
+                env(safe-area-inset-bottom)
+            );
 
-        padding-bottom: 10px !important;
     }
 
 }
 
 
 /* =========================================================
-   SMALL MOBILE
-   iPhone SE / SMALL SCREEN
+   SMALL PHONE
    ========================================================= */
 
 @media (max-width: 390px) {
 
-    .container-fluid {
 
-        padding-left: 10px;
+    .app-container {
 
-        padding-right: 10px;
+        padding-left: 10px !important;
+
+        padding-right: 10px !important;
+
+    }
+
+
+    .header-banner {
+
+        height: 125px;
+
+        border-radius: 16px;
+
+    }
+
+
+    main.app-container {
+
+        padding-top: 20px !important;
+
     }
 
 
     .glass-card {
 
-        padding-left: 15px;
+        padding:
+            20px
+            14px
+            20px;
 
-        padding-right: 15px;
+        border-radius: 19px;
 
-        border-radius: 20px;
     }
 
 
-    .glass-card h4 {
+    .section-title {
 
-        font-size: 24px;
+        font-size: 22px;
+
     }
 
 
-    .glass-card h4 i {
+    .section-title i {
 
-        font-size: 28px;
+        font-size: 27px;
+
     }
 
 
-    label {
+    .section-divider {
 
-        font-size: 17px;
+        margin-top: 18px;
+
+        margin-bottom: 24px;
+
+    }
+
+
+    .form-group {
+
+        margin-bottom: 19px;
+
+    }
+
+
+    .form-group label {
+
+        font-size: 15px;
+
+        margin-bottom: 9px;
+
     }
 
 
     .form-control,
     .form-select {
 
-        height: 55px;
+        height: 54px;
 
-        min-height: 55px;
+        min-height: 54px;
 
-        font-size: 17px;
+        font-size: 16px !important;
 
-        border-radius: 14px;
     }
 
 
     .btn-ghn {
 
-        height: 57px;
+        height: 56px;
 
-        min-height: 57px;
+        min-height: 56px;
 
-        font-size: 18px;
+        font-size: 16px;
+
     }
 
 }
 
 
 /* =========================================================
-   SAFE AREA - iPHONE
+   SAFE AREA
    ========================================================= */
 
 @supports (padding: max(0px)) {
 
-    .container-fluid {
+    .page {
 
         padding-bottom:
             max(
-                24px,
+                0px,
                 env(safe-area-inset-bottom)
             );
+
     }
+
+}
+
+
+/* =========================================================
+   PREVENT MEDIA OVERFLOW
+   ========================================================= */
+
+img,
+video,
+iframe,
+svg {
+
+    max-width: 100%;
+
+}
+
+
+/* =========================================================
+   NO HORIZONTAL OVERFLOW
+   ========================================================= */
+
+input,
+select,
+button,
+textarea {
+
+    max-width: 100%;
+
+}
+
+
+/* =========================================================
+   TOUCH
+   ========================================================= */
+
+button,
+select,
+.btn {
+
+    touch-action: manipulation;
 
 }
