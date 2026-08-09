@@ -1,137 +1,120 @@
 /* =========================================================
    GHN ATTENDANCE SYSTEM
-   FULL RESPONSIVE STYLE
-   ========================================================= */
-
-
-/* =========================================================
-   1. VARIABLES
+   MOBILE UI V12
    ========================================================= */
 
 :root {
+    --bg: #031217;
+    --bg-soft: #071b21;
+    --card: #061b21;
+    --input: #0d252c;
 
-    --bg: #071418;
-    --bg-dark: #061115;
-
-    --card: #0b2027;
-    --card-dark: #091b21;
-
-    --input: #19343b;
-
-    --primary: #00d2d3;
-    --primary-light: #00e5ff;
-
-    --border: #10d7dc;
+    --cyan: #00e5ff;
+    --cyan-light: #12f5f5;
+    --cyan-dark: #00bfc8;
 
     --text: #ffffff;
-    --muted: #8fb3b8;
+    --text-soft: #c5d4d8;
+    --placeholder: #8baeb5;
 
+    --border: #00d9e8;
+
+    --radius-card: 26px;
+    --radius-input: 15px;
+
+    --shadow:
+        0 0 25px rgba(0, 229, 255, 0.12);
 }
 
 
 /* =========================================================
-   2. RESET
+   RESET
    ========================================================= */
 
 * {
-
     margin: 0;
     padding: 0;
-
     box-sizing: border-box;
-
 }
 
-
-/* =========================================================
-   3. HTML
-   ========================================================= */
 
 html {
-
     width: 100%;
-    min-width: 0;
-
     min-height: 100%;
-
-    font-size: 16px;
-
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-
+    background: var(--bg);
     scroll-behavior: smooth;
-
 }
 
 
-/* =========================================================
-   4. BODY
-   ========================================================= */
-
 body {
-
     width: 100%;
-    min-width: 0;
-
     min-height: 100vh;
 
-    overflow-x: hidden;
-
     background:
-
         radial-gradient(
-            circle at top center,
-            #123c44 0%,
-            #071418 42%,
-            #061115 100%
+            circle at 50% 0%,
+            rgba(0, 229, 255, 0.10),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #071b21 0%,
+            #031217 55%,
+            #020c10 100%
         );
 
     color: var(--text);
 
     font-family:
         "Segoe UI",
+        Roboto,
         Arial,
         sans-serif;
 
-    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
 
+    overflow-x: hidden;
 }
 
 
 /* =========================================================
-   5. CONTAINER
+   CONTAINER
    ========================================================= */
 
-.container-fluid {
+.app-container {
 
     width: 100%;
 
-    max-width: 100%;
+    max-width: 1180px;
 
-    padding: 30px;
+    margin-left: auto;
+    margin-right: auto;
 
+    padding-left: 18px;
+    padding-right: 18px;
 }
 
 
 /* =========================================================
-   6. HEADER BANNER
+   HEADER
    ========================================================= */
+
+header.app-container {
+
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+
 
 .header-banner {
 
     width: 100%;
 
-    height: 250px;
+    min-height: 210px;
 
-    margin-bottom: 34px;
+    border-radius: 24px;
 
-    border-radius: 28px;
-
-    overflow: hidden;
-
-    border: 1px solid var(--primary-light);
-
-    background-color: var(--bg);
+    border: 1px solid var(--cyan);
 
     background-image:
         url("https://raw.githubusercontent.com/duynh1998/Banner/main/ChatGPT%20Image%2013_10_56%204%20thg%208%2C%202026.png");
@@ -140,1316 +123,878 @@ body {
 
     background-size: cover;
 
-    background-position: center center;
+    background-position: center;
+
+    background-color: #06171c;
 
     box-shadow:
+        0 0 20px rgba(0, 229, 255, 0.15),
+        inset 0 0 30px rgba(0, 229, 255, 0.04);
 
-        0 0 25px
-        rgba(0, 229, 255, 0.20),
-
-        inset 0 0 20px
-        rgba(0, 229, 255, 0.05);
-
+    overflow: hidden;
 }
 
 
 /* =========================================================
-   7. CARD
+   MAIN
+   ========================================================= */
+
+main.app-container {
+
+    padding-bottom: 30px;
+}
+
+
+.row {
+
+    --bs-gutter-x: 24px;
+    --bs-gutter-y: 24px;
+}
+
+
+/* =========================================================
+   CARD
    ========================================================= */
 
 .glass-card {
 
     width: 100%;
 
-    min-width: 0;
-
     background:
-
         linear-gradient(
             145deg,
-            rgba(11, 32, 39, 0.98),
-            rgba(7, 24, 30, 0.98)
+            rgba(7, 30, 37, 0.98),
+            rgba(3, 20, 25, 0.98)
         );
 
-    border:
+    border: 1px solid var(--border);
 
-        1px solid
-        var(--border);
+    border-radius: var(--radius-card);
 
-    border-radius: 26px;
-
-    padding: 30px;
-
-    margin-bottom: 22px;
+    padding: 32px;
 
     box-shadow:
+        0 0 22px rgba(0, 229, 255, 0.10);
 
-        0 0 22px
-        rgba(0, 210, 211, 0.14),
+    position: relative;
 
-        inset 0 0 20px
-        rgba(0, 210, 211, 0.025);
+    overflow: hidden;
+}
 
+
+/* ánh sáng nhẹ bên trong card */
+
+.glass-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -120px;
+    right: -120px;
+
+    width: 260px;
+    height: 260px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 229, 255, 0.08),
+            transparent 70%
+        );
+
+    pointer-events: none;
 }
 
 
 /* =========================================================
-   8. CARD TITLE
+   SECTION TITLE
    ========================================================= */
 
-.glass-card h4 {
+.section-title {
 
     display: flex;
 
     align-items: center;
 
-    gap: 11px;
+    gap: 13px;
 
-    margin: 0;
+    color: var(--cyan);
 
-    color: var(--primary-light);
-
-    font-size: 27px;
+    font-size: 28px;
 
     font-weight: 800;
 
+    letter-spacing: 0.3px;
+
     line-height: 1.2;
 
+    margin-bottom: 20px;
 }
 
 
-.glass-card h4 i {
+.section-title i {
 
-    font-size: 32px;
+    font-size: 34px;
 
     line-height: 1;
 
+    color: var(--cyan);
 }
 
 
 /* =========================================================
-   9. DIVIDER
+   DIVIDER
    ========================================================= */
 
-hr {
+.section-divider {
 
-    height: 1px;
+    width: 100%;
 
-    border: 0;
+    height: 2px;
 
-    border-top:
-        1px solid
-        var(--border);
-
-    opacity: 0.55;
-
-    margin-top: 23px;
-
-    margin-bottom: 30px;
-
-}
-
-
-/* =========================================================
-   10. FORM GROUP
-   ========================================================= */
-
-/*
-    Cấu trúc hiện tại của Index:
-
-    <div class="mb-3">
-
-        <label>...</label>
-
-        <input / select>
-
-    </div>
-*/
-
-.mb-3 {
-
-    display: block !important;
-
-    width: 100% !important;
-
-    margin-top: 0 !important;
-
-    margin-bottom: 25px !important;
-
-    padding: 0 !important;
-
-}
-
-
-/* =========================================================
-   11. LABEL
-   ========================================================= */
-
-.mb-3 label {
-
-    display: block !important;
-
-    width: 100% !important;
-
-    margin:
-
-        0
-        0
-        11px
-        0 !important;
-
-    padding: 0 !important;
-
-    color: #ffffff !important;
-
-    font-size: 18px !important;
-
-    font-weight: 700 !important;
-
-    line-height: 1.4 !important;
-
-}
-
-
-/* =========================================================
-   12. INPUT
-   ========================================================= */
-
-.mb-3 .form-control {
-
-    display: block !important;
-
-    width: 100% !important;
-
-    height: 58px !important;
-
-    min-height: 58px !important;
-
-    margin: 0 !important;
-
-    /*
-        Khoảng cách chữ với viền trái/phải
-    */
-
-    padding:
-
-        0
-        22px !important;
+    margin-bottom: 28px;
 
     background:
-        var(--input) !important;
+        linear-gradient(
+            90deg,
+            rgba(0, 229, 255, 0.65),
+            rgba(0, 229, 255, 0.20)
+        );
 
-    color:
-        #ffffff !important;
+    box-shadow:
+        0 0 5px rgba(0, 229, 255, 0.15);
+}
 
-    border:
 
-        1.5px solid
-        var(--primary) !important;
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
 
-    border-radius: 15px !important;
+.form-group {
 
-    font-size: 18px !important;
+    margin-bottom: 22px;
+}
 
-    font-weight: 500 !important;
 
-    line-height: normal !important;
+.form-group:last-of-type {
 
-    outline: none !important;
+    margin-bottom: 0;
+}
 
-    box-shadow: none !important;
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.form-group label {
+
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    line-height: 1.3;
+
+    margin-bottom: 9px;
+}
+
+
+/* =========================================================
+   INPUT + SELECT
+   ========================================================= */
+
+.form-control,
+.form-select {
+
+    width: 100%;
+
+    min-height: 56px;
+
+    padding: 13px 17px;
+
+    background-color: var(--input);
+
+    color: #ffffff;
+
+    border: 1px solid rgba(126, 179, 188, 0.50);
+
+    border-radius: var(--radius-input);
+
+    font-size: 18px;
+
+    font-weight: 400;
+
+    outline: none;
+
+    box-shadow: none;
 
     transition:
-
-        border-color
-        .2s ease,
-
-        background
-        .2s ease,
-
-        box-shadow
-        .2s ease;
-
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
 }
 
 
-/* =========================================================
-   13. PLACEHOLDER
-   ========================================================= */
+/* SELECT */
 
-.mb-3 .form-control::placeholder {
-
-    color:
-        var(--muted) !important;
-
-    opacity: 1 !important;
-
-}
-
-
-/* =========================================================
-   14. SELECT
-   ========================================================= */
-
-.mb-3 .form-select {
-
-    display: block !important;
-
-    width: 100% !important;
-
-    height: 58px !important;
-
-    min-height: 58px !important;
-
-    margin: 0 !important;
-
-    padding:
-
-        0
-        22px !important;
-
-    background-color:
-        var(--input) !important;
-
-    color:
-        #ffffff !important;
-
-    border:
-
-        1.5px solid
-        var(--primary) !important;
-
-    border-radius: 15px !important;
-
-    font-size: 18px !important;
-
-    font-weight: 500 !important;
-
-    line-height: normal !important;
-
-    outline: none !important;
-
-    box-shadow: none !important;
+.form-select {
 
     cursor: pointer;
 
+    appearance: auto;
 }
 
 
-/* =========================================================
-   15. SELECT OPTION
-   ========================================================= */
+/* placeholder */
 
-.mb-3 .form-select option {
+.form-control::placeholder {
 
-    background:
-        #0b2027;
+    color: var(--placeholder);
 
-    color:
-        #ffffff;
-
+    opacity: 1;
 }
 
 
-/* =========================================================
-   16. INPUT FOCUS
-   ========================================================= */
+/* focus */
 
-.mb-3 .form-control:focus,
-.mb-3 .form-select:focus {
+.form-control:focus,
+.form-select:focus {
 
-    background:
-        #1b3941 !important;
+    background-color: #102d35;
 
-    color:
-        #ffffff !important;
+    color: #ffffff;
 
-    border-color:
-        var(--primary-light) !important;
+    border-color: var(--cyan);
 
     box-shadow:
+        0 0 0 2px rgba(0, 229, 255, 0.10),
+        0 0 15px rgba(0, 229, 255, 0.12);
 
-        0 0 0 2px
-        rgba(0, 229, 255, 0.08),
+    outline: none;
+}
 
-        0 0 15px
-        rgba(0, 229, 255, 0.20) !important;
 
-    outline: none !important;
+/* select option */
 
+.form-select option {
+
+    background: #092128;
+
+    color: #ffffff;
 }
 
 
 /* =========================================================
-   17. CHECK IN BUTTON
+   CHECK IN BUTTON
    ========================================================= */
 
 .btn-ghn {
 
-    display: flex !important;
+    width: 100%;
 
-    align-items: center;
+    min-height: 70px;
 
-    justify-content: center;
+    margin-top: 26px;
 
-    gap: 9px;
-
-    width: 100% !important;
-
-    height: 60px;
-
-    min-height: 60px;
-
-    margin-top: 2px;
-
-    padding:
-        12px 20px;
-
-    background:
-
-        linear-gradient(
-            135deg,
-            #00cfd1,
-            #00dfe1
-        );
-
-    color:
-        #001416;
+    padding: 14px 20px;
 
     border: none;
 
-    border-radius: 15px;
+    border-radius: 16px;
 
-    font-size: 19px;
+    background:
+        linear-gradient(
+            135deg,
+            #08d6dc,
+            #0ad8e8
+        );
+
+    color: #001014;
+
+    font-size: 22px;
 
     font-weight: 800;
 
-    box-shadow:
+    letter-spacing: 0.2px;
 
-        0 5px 18px
-        rgba(0, 210, 211, 0.18);
-
-    transition:
-        .2s ease;
-
-}
-
-
-/* =========================================================
-   18. CHECK IN HOVER
-   ========================================================= */
-
-.btn-ghn:hover {
-
-    background:
-
-        linear-gradient(
-            135deg,
-            #00e5e7,
-            #0af4f5
-        );
-
-    color:
-        #001416;
-
-    transform:
-        translateY(-1px);
-
-}
-
-
-/* =========================================================
-   19. CHECK IN ACTIVE
-   ========================================================= */
-
-.btn-ghn:active {
-
-    transform:
-        translateY(0);
-
-}
-
-
-/* =========================================================
-   20. CHECK OUT BUTTON
-   ========================================================= */
-
-.btn-outline-info {
-
-    display: flex !important;
+    display: flex;
 
     align-items: center;
 
     justify-content: center;
 
-    gap: 8px;
+    gap: 12px;
+
+    box-shadow:
+        0 8px 22px rgba(0, 229, 255, 0.18);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        filter 0.15s ease;
+}
+
+
+.btn-ghn i {
+
+    font-size: 28px;
+
+    line-height: 1;
+}
+
+
+.btn-ghn:hover {
+
+    color: #001014;
+
+    background:
+        linear-gradient(
+            135deg,
+            #10e4e8,
+            #15e9f5
+        );
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 28px rgba(0, 229, 255, 0.25);
+}
+
+
+.btn-ghn:active {
+
+    transform: scale(0.985);
+
+    box-shadow:
+        0 4px 12px rgba(0, 229, 255, 0.15);
+}
+
+
+/* =========================================================
+   CHECK OUT BUTTON
+   Giống CHECK IN
+   ========================================================= */
+
+.btn-checkout {
 
     width: 100%;
 
-    height: 58px;
+    min-height: 70px;
 
-    min-height: 58px;
+    margin-top: 26px;
 
-    border:
+    margin-bottom: 28px;
 
-        1.5px solid
-        var(--primary);
+    padding: 14px 20px;
 
-    border-radius: 15px;
+    border: none;
+
+    border-radius: 16px;
 
     background:
-        transparent;
+        linear-gradient(
+            135deg,
+            #08d6dc,
+            #0ad8e8
+        );
 
-    color:
-        var(--primary-light);
+    color: #001014;
 
-    font-size: 18px;
+    font-size: 22px;
 
-    font-weight: 700;
+    font-weight: 800;
+
+    letter-spacing: 0.2px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    box-shadow:
+        0 8px 22px rgba(0, 229, 255, 0.18);
 
     transition:
-        .2s ease;
-
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 
-/* =========================================================
-   21. CHECK OUT HOVER
-   ========================================================= */
+.btn-checkout i {
 
-.btn-outline-info:hover {
+    font-size: 28px;
+}
+
+
+.btn-checkout:hover {
+
+    color: #001014;
 
     background:
-        rgba(0, 229, 255, 0.08);
+        linear-gradient(
+            135deg,
+            #10e4e8,
+            #15e9f5
+        );
 
-    border-color:
-        var(--primary-light);
+    transform: translateY(-1px);
 
-    color:
-        #ffffff;
+    box-shadow:
+        0 10px 28px rgba(0, 229, 255, 0.25);
+}
 
+
+.btn-checkout:active {
+
+    transform: scale(0.985);
 }
 
 
 /* =========================================================
-   22. CHECKOUT INFO
+   CHECKOUT INFO
    ========================================================= */
 
-#checkoutInfo {
+.checkout-info {
 
     width: 100%;
 
     min-height: 220px;
 
-    margin-top: 28px !important;
+    margin-top: 4px;
 
-}
+    padding: 26px;
 
+    border: 1px dashed var(--cyan);
 
-/* =========================================================
-   23. CHECKOUT TITLE
-   ========================================================= */
-
-#checkoutInfo h5 {
-
-    color:
-        var(--primary-light);
-
-    font-weight:
-        700;
-
-}
-
-
-/* =========================================================
-   24. CHECKOUT TEXT
-   ========================================================= */
-
-#checkoutInfo p {
-
-    color:
-        #c9d9dc;
-
-    line-height:
-        1.6;
-
-}
-
-
-/* =========================================================
-   25. CHECKOUT BOX
-   ========================================================= */
-
-#checkoutInfo .mb-3,
-#checkoutInfo .mb-4 {
-
-    padding:
-        14px 16px !important;
-
-    margin-bottom:
-        12px !important;
-
-    border-radius:
-        12px;
+    border-radius: 18px;
 
     background:
-        rgba(25, 52, 59, 0.65);
-
+        rgba(3, 22, 28, 0.65);
 }
 
 
 /* =========================================================
-   26. CHECKOUT LABEL
+   EMPTY STATE
    ========================================================= */
 
-#checkoutInfo b {
+.empty-state {
 
-    color:
-        var(--primary-light);
+    min-height: 165px;
 
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+}
+
+
+.empty-state > i {
+
+    font-size: 54px;
+
+    color: var(--cyan);
+
+    margin-bottom: 15px;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(0, 229, 255, 0.25)
+        );
+}
+
+
+.empty-state h5 {
+
+    margin: 0 0 10px;
+
+    color: var(--cyan);
+
+    font-size: 22px;
+
+    font-weight: 800;
+}
+
+
+.empty-state p {
+
+    margin: 0;
+
+    color: var(--text-soft);
+
+    font-size: 16px;
+
+    line-height: 1.6;
+}
+
+
+.empty-state p b {
+
+    color: var(--cyan);
 }
 
 
 /* =========================================================
-   27. CHECKOUT EMPTY STATE
+   CHECKOUT INFO DATA
    ========================================================= */
 
-#checkoutInfo .text-center {
+.checkout-info .mb-3,
+.checkout-info .mb-4 {
 
-    min-height:
-        220px;
+    margin-bottom: 20px !important;
 
-    display:
-        flex;
+    color: #ffffff;
 
-    flex-direction:
-        column;
+    font-size: 17px;
 
-    align-items:
-        center;
+    line-height: 1.6;
+}
 
-    justify-content:
-        center;
 
+.checkout-info b {
+
+    color: var(--cyan);
+
+    font-weight: 700;
 }
 
 
 /* =========================================================
-   28. CHECKOUT ICON
+   FOOTER
    ========================================================= */
 
-#checkoutInfo .text-center i {
+footer.app-container {
 
-    color:
-        var(--primary-light) !important;
+    padding-bottom: 20px;
+}
 
+
+.footer {
+
+    padding:
+
+        18px
+
+        0;
+
+    text-align: center;
+
+    color: #91a7ac;
+
+    font-size: 15px;
+
+    border-top:
+        1px solid rgba(0, 229, 255, 0.12);
 }
 
 
 /* =========================================================
-   29. TABLET
+   DISABLED
    ========================================================= */
 
-@media (max-width: 991.98px) {
+button:disabled {
 
-    .container-fluid {
+    opacity: 0.55;
 
-        padding:
-            22px;
+    cursor: not-allowed;
 
-    }
+    transform: none !important;
 
-
-    .header-banner {
-
-        height:
-            190px;
-
-        margin-bottom:
-            28px;
-
-        border-radius:
-            23px;
-
-    }
-
-
-    .glass-card {
-
-        padding:
-            27px;
-
-        border-radius:
-            24px;
-
-    }
-
+    box-shadow: none !important;
 }
 
 
 /* =========================================================
-   30. MOBILE
-   ========================================================= */
-
-@media (max-width: 767.98px) {
-
-
-    html,
-    body {
-
-        width:
-            100% !important;
-
-        max-width:
-            100% !important;
-
-        min-width:
-            0 !important;
-
-        overflow-x:
-            hidden !important;
-
-    }
-
-
-    body {
-
-        font-size:
-            16px;
-
-    }
-
-
-    /* -----------------------------------------
-       CONTAINER
-    ----------------------------------------- */
-
-    .container-fluid {
-
-        width:
-            100% !important;
-
-        max-width:
-            100% !important;
-
-        padding:
-
-            14px
-            14px
-            24px
-            14px !important;
-
-    }
-
-
-    /* -----------------------------------------
-       BANNER
-    ----------------------------------------- */
-
-    .header-banner {
-
-        width:
-            100%;
-
-        height:
-            145px;
-
-        margin-bottom:
-            25px;
-
-        border-radius:
-            19px;
-
-        background-size:
-            cover;
-
-        background-position:
-            center center;
-
-    }
-
-
-    /* -----------------------------------------
-       CARD
-    ----------------------------------------- */
-
-    .glass-card {
-
-        width:
-            100% !important;
-
-        padding:
-
-            25px
-            18px
-            24px !important;
-
-        margin-bottom:
-            20px;
-
-        border-radius:
-            22px;
-
-    }
-
-
-    /* -----------------------------------------
-       TITLE
-    ----------------------------------------- */
-
-    .glass-card h4 {
-
-        font-size:
-            25px;
-
-        gap:
-            10px;
-
-    }
-
-
-    .glass-card h4 i {
-
-        font-size:
-            30px;
-
-    }
-
-
-    /* -----------------------------------------
-       DIVIDER
-    ----------------------------------------- */
-
-    hr {
-
-        margin-top:
-            22px;
-
-        margin-bottom:
-            30px;
-
-    }
-
-
-    /* =================================================
-       FORM SPACING
-    ================================================= */
-
-    .mb-3 {
-
-        width:
-            100% !important;
-
-        margin-top:
-            0 !important;
-
-        margin-bottom:
-            25px !important;
-
-        padding:
-            0 !important;
-
-    }
-
-
-    /* -----------------------------------------
-       LABEL
-    ----------------------------------------- */
-
-    .mb-3 label {
-
-        width:
-            100% !important;
-
-        margin:
-
-            0
-            0
-            11px
-            0 !important;
-
-        padding:
-            0 !important;
-
-        font-size:
-            17px !important;
-
-        font-weight:
-            700 !important;
-
-        line-height:
-            1.4 !important;
-
-    }
-
-
-    /* =================================================
-       INPUT MOBILE
-
-       QUAN TRỌNG:
-       Chữ cách viền trái 20px
-    ================================================= */
-
-    .mb-3 .form-control {
-
-        width:
-            100% !important;
-
-        height:
-            58px !important;
-
-        min-height:
-            58px !important;
-
-        margin:
-            0 !important;
-
-        padding:
-
-            0
-            20px !important;
-
-        border-radius:
-            15px !important;
-
-        font-size:
-            16px !important;
-
-        line-height:
-            normal !important;
-
-    }
-
-
-    /* =================================================
-       SELECT MOBILE
-    ================================================= */
-
-    .mb-3 .form-select {
-
-        width:
-            100% !important;
-
-        height:
-            58px !important;
-
-        min-height:
-            58px !important;
-
-        margin:
-            0 !important;
-
-        padding:
-
-            0
-            20px !important;
-
-        border-radius:
-            15px !important;
-
-        font-size:
-            16px !important;
-
-        line-height:
-            normal !important;
-
-    }
-
-
-    /* -----------------------------------------
-       CHECK IN BUTTON
-    ----------------------------------------- */
-
-    .btn-ghn {
-
-        width:
-            100% !important;
-
-        height:
-            60px !important;
-
-        min-height:
-            60px !important;
-
-        margin-top:
-            0 !important;
-
-        border-radius:
-            15px !important;
-
-        font-size:
-            17px !important;
-
-    }
-
-
-    /* -----------------------------------------
-       CHECK OUT BUTTON
-    ----------------------------------------- */
-
-    .btn-outline-info {
-
-        width:
-            100% !important;
-
-        height:
-            58px !important;
-
-        min-height:
-            58px !important;
-
-        border-radius:
-            15px !important;
-
-        font-size:
-            16px !important;
-
-    }
-
-
-    /* -----------------------------------------
-       CHECKOUT INFO
-    ----------------------------------------- */
-
-    #checkoutInfo {
-
-        margin-top:
-            25px !important;
-
-        min-height:
-            190px;
-
-    }
-
-
-    #checkoutInfo .text-center {
-
-        min-height:
-            190px;
-
-        padding:
-            20px 10px !important;
-
-    }
-
-
-    #checkoutInfo .text-center i {
-
-        font-size:
-            50px !important;
-
-    }
-
-
-    #checkoutInfo h5 {
-
-        font-size:
-            17px;
-
-    }
-
-
-    #checkoutInfo p {
-
-        font-size:
-            14px;
-
-        line-height:
-            1.6;
-
-    }
-
-}
-
-
-/* =========================================================
-   31. SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 390px) {
-
-
-    .container-fluid {
-
-        padding:
-
-            10px
-            10px
-            20px
-            10px !important;
-
-    }
-
-
-    .header-banner {
-
-        height:
-            125px;
-
-        margin-bottom:
-            21px;
-
-        border-radius:
-            16px;
-
-    }
-
-
-    .glass-card {
-
-        padding:
-
-            22px
-            14px
-            21px !important;
-
-        border-radius:
-            20px;
-
-    }
-
-
-    .glass-card h4 {
-
-        font-size:
-            23px;
-
-    }
-
-
-    .glass-card h4 i {
-
-        font-size:
-            28px;
-
-    }
-
-
-    hr {
-
-        margin-top:
-            19px;
-
-        margin-bottom:
-            26px;
-
-    }
-
-
-    .mb-3 {
-
-        margin-bottom:
-            23px !important;
-
-    }
-
-
-    .mb-3 label {
-
-        font-size:
-            16px !important;
-
-        margin-bottom:
-            9px !important;
-
-    }
-
-
-    /* -----------------------------------------
-       INPUT SMALL PHONE
-       ----------------------------------------- */
-
-    .mb-3 .form-control {
-
-        height:
-            55px !important;
-
-        min-height:
-            55px !important;
-
-        padding:
-
-            0
-            18px !important;
-
-        font-size:
-            16px !important;
-
-        border-radius:
-            14px !important;
-
-    }
-
-
-    /* -----------------------------------------
-       SELECT SMALL PHONE
-       ----------------------------------------- */
-
-    .mb-3 .form-select {
-
-        height:
-            55px !important;
-
-        min-height:
-            55px !important;
-
-        padding:
-
-            0
-            18px !important;
-
-        font-size:
-            16px !important;
-
-        border-radius:
-            14px !important;
-
-    }
-
-
-    /* -----------------------------------------
-       BUTTON SMALL PHONE
-    ----------------------------------------- */
-
-    .btn-ghn {
-
-        height:
-            57px !important;
-
-        min-height:
-            57px !important;
-
-        font-size:
-            16px !important;
-
-        border-radius:
-            14px !important;
-
-    }
-
-}
-
-
-/* =========================================================
-   32. SAFE AREA IPHONE
-   ========================================================= */
-
-@supports (padding: max(0px)) {
-
-    .container-fluid {
-
-        padding-bottom:
-
-            max(
-                24px,
-                env(safe-area-inset-bottom)
-            ) !important;
-
-    }
-
-}
-
-
-/* =========================================================
-   33. PREVENT OVERFLOW
-   ========================================================= */
-
-img,
-video,
-iframe,
-svg {
-
-    max-width:
-        100%;
-
-}
-
-
-input,
-select,
-button,
-textarea {
-
-    max-width:
-        100%;
-
-}
-
-
-/* =========================================================
-   34. TOUCH
-   ========================================================= */
-
-button,
-select,
-.btn {
-
-    touch-action:
-        manipulation;
-
-}
-
-
-/* =========================================================
-   35. FINAL OVERRIDE
+   MOBILE
    ========================================================= */
 
 @media (max-width: 767.98px) {
 
-    .mb-3 {
+    body {
 
-        margin-bottom:
-            25px !important;
-
+        font-size: 16px;
     }
 
 
-    .mb-3 > label {
+    .app-container {
 
-        margin-bottom:
-            11px !important;
+        padding-left: 18px;
 
+        padding-right: 18px;
     }
 
 
-    .mb-3 > .form-control,
-    .mb-3 > .form-select {
+    header.app-container {
 
-        margin-top:
-            0 !important;
+        padding-top: 12px;
 
+        padding-bottom: 18px;
     }
 
 
-    /*
-       Đảm bảo chữ trong input
-       không sát viền
-    */
+    .header-banner {
 
-    .mb-3 > .form-control {
+        min-height: 145px;
 
-        padding-left:
-            20px !important;
+        border-radius: 20px;
 
-        padding-right:
-            20px !important;
-
+        background-position: center;
     }
 
 
-    .mb-3 > .form-select {
+    main.app-container {
 
-        padding-left:
-            20px !important;
-
-        padding-right:
-            20px !important;
-
+        padding-bottom: 18px;
     }
 
+
+    .row {
+
+        --bs-gutter-x: 0;
+
+        --bs-gutter-y: 20px;
+    }
+
+
+    .glass-card {
+
+        padding: 24px 20px 28px;
+
+        border-radius: 24px;
+    }
+
+
+    .section-title {
+
+        font-size: 25px;
+
+        gap: 10px;
+
+        margin-bottom: 18px;
+    }
+
+
+    .section-title i {
+
+        font-size: 31px;
+    }
+
+
+    .section-divider {
+
+        margin-bottom: 27px;
+    }
+
+
+    .form-group {
+
+        margin-bottom: 20px;
+    }
+
+
+    .form-group label {
+
+        font-size: 18px;
+
+        margin-bottom: 8px;
+    }
+
+
+    .form-control,
+    .form-select {
+
+        min-height: 56px;
+
+        font-size: 17px;
+
+        padding-left: 15px;
+
+        padding-right: 15px;
+    }
+
+
+    /* QUAN TRỌNG:
+       tạo khoảng cách rõ giữa input SĐT và nút */
+
+    .form-group:last-of-type {
+
+        margin-bottom: 0;
+    }
+
+
+    .btn-ghn {
+
+        min-height: 68px;
+
+        margin-top: 30px;
+
+        margin-bottom: 0;
+
+        border-radius: 16px;
+
+        font-size: 21px;
+    }
+
+
+    .btn-checkout {
+
+        min-height: 68px;
+
+        margin-top: 28px;
+
+        margin-bottom: 28px;
+
+        border-radius: 16px;
+
+        font-size: 21px;
+    }
+
+
+    .checkout-info {
+
+        min-height: 210px;
+
+        padding: 22px 18px;
+
+        border-radius: 17px;
+    }
+
+
+    .empty-state > i {
+
+        font-size: 48px;
+    }
+
+
+    .empty-state h5 {
+
+        font-size: 20px;
+    }
+
+
+    .empty-state p {
+
+        font-size: 15px;
+    }
+
+
+    .footer {
+
+        font-size: 14px;
+
+        padding-top: 15px;
+    }
 }
 
 
 /* =========================================================
-   END
+   SMALL PHONE
    ========================================================= */
+
+@media (max-width: 380px) {
+
+    .app-container {
+
+        padding-left: 13px;
+
+        padding-right: 13px;
+    }
+
+
+    .glass-card {
+
+        padding:
+
+            21px
+
+            16px
+
+            25px;
+    }
+
+
+    .header-banner {
+
+        min-height: 125px;
+
+        border-radius: 18px;
+    }
+
+
+    .section-title {
+
+        font-size: 23px;
+    }
+
+
+    .section-title i {
+
+        font-size: 28px;
+    }
+
+
+    .form-control,
+    .form-select {
+
+        min-height: 53px;
+
+        font-size: 16px;
+    }
+
+
+    .btn-ghn,
+    .btn-checkout {
+
+        min-height: 64px;
+
+        font-size: 19px;
+    }
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 992px) {
+
+    .app-container {
+
+        padding-left: 24px;
+
+        padding-right: 24px;
+    }
+
+
+    .header-banner {
+
+        min-height: 230px;
+    }
+
+
+    .glass-card {
+
+        min-height: 100%;
+
+        padding: 32px;
+    }
+
+
+    .form-control,
+    .form-select {
+
+        min-height: 56px;
+    }
+}
