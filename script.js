@@ -1,4 +1,4 @@
-/* GHN ATTENDANCE - FRONTEND V15 */
+/* GHN ATTENDANCE - FRONTEND V16 */
 
 const API_URL = "https://script.google.com/a/macros/ghn.vn/s/AKfycbzacqnurmvaqVUunpe2hYvFx2Su-40ZOr1tmZtZX7zkLs-qxCwCQXhtvLtDfbXTNAZ6/exec";
 
@@ -163,11 +163,8 @@ function apiGet(action, params = {}) {
 
 /* POST API để ghi nhận Check In / Check Out */
 async function apiPost(action, params = {}) {
-
-  const body = new URLSearchParams({
-    action,
-    ...params
-  });
+  return await apiGet(action, params);
+}
 
   const response = await fetch(API_URL, {
     method: "POST",
