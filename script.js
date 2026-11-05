@@ -1,3 +1,4 @@
+
 /* GHN ATTENDANCE - FRONTEND V16 */
 
 const API_URL = "https://script.google.com/a/macros/ghn.vn/s/AKfycbzacqnurmvaqVUunpe2hYvFx2Su-40ZOr1tmZtZX7zkLs-qxCwCQXhtvLtDfbXTNAZ6/exec";
@@ -161,35 +162,9 @@ function apiGet(action, params = {}) {
   });
 }
 
-/* POST API để ghi nhận Check In / Check Out */
+/* CHECK IN / CHECK OUT dùng GET JSONP theo API hiện tại */
 async function apiPost(action, params = {}) {
   return await apiGet(action, params);
-}
-
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-    },
-    body: body.toString(),
-    redirect: "follow"
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      "Máy chủ phản hồi lỗi HTTP " + response.status
-    );
-  }
-
-  const result = normalizeResult(await response.text());
-
-  if (!result || typeof result !== "object") {
-    throw new Error(
-      "Phản hồi máy chủ không hợp lệ. Vui lòng kiểm tra lại kết nối."
-    );
-  }
-
-  return result;
 }
 
 function requireSuccess(result) {
